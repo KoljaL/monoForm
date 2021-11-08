@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=1, initial-scale=1.0" />
+        <link rel="icon" type="image/png" sizes="32x32" href=" data:image/png;base64,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" />
+        <title>FloatingLabel</title>
+        <style>
+            /* @font-face {
+                font-family: 'virtuous-slab';
+                src: url('css/fonts/PublicSans-Light.woff2') format('woff2');
+            } */
+            @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300&display=swap');
+            * {
+                box-sizing: border-box;
+            }
+            body {
+                position: relative;
+                max-width: 60rem;
+                background: #eee;
+                margin: 2rem auto;
+                display: flex;
+                align-items: flex-start;
+                flex-wrap: wrap;
+            }
+
+            .center {
+                position: relative;
+                width: 400px;
+                max-width: max-content;
+                padding: 1em;
+                margin: 2em auto;
+                border: 5px solid #00000015;
+                border-radius: 5px;
+            }
+
+            fieldset {
+                padding: 1.5rem;
+                margin: 1em;
+                background: #fff;
+                width: 40rem;
+                border: 1px solid #000;
+                box-shadow: 4px 4px 0 #555;
+            }
+
+            .inputGroupp {
+                display: flex !important;
+                margin-bottom: 0em !important;
+            }
+            .inputGroupp div {
+                margin-top: 0;
+            }
+            .inputGroupp div:not(:last-child) {
+                margin-right: 15px;
+            }
+            .floatLabel div {
+                display: block;
+                position: relative;
+                margin-bottom: 1.5em;
+                font-family: 'Public Sans', sans-serif;
+            }
+            .floatLabel label {
+                position: absolute;
+                left: 5px;
+                top: -10px;
+                background: white;
+                padding: 0 2px;
+                cursor: text;
+                font-size: 80%;
+                color: #555;
+                -webkit-transition: 0.2s;
+                transition: 0.2s;
+            }
+            .floatLabel input::-webkit-input-placeholder,
+            .floatLabel textarea::-webkit-input-placeholder {
+                opacity: 1;
+                -webkit-transition: 0.2s;
+                transition: 0.2s;
+            }
+            .floatLabel input::-moz-placeholder,
+            .floatLabel textarea::-moz-placeholder {
+                opacity: 1;
+                transition: 0.2s;
+            }
+            .floatLabel input:-ms-input-placeholder,
+            .floatLabel textarea:-ms-input-placeholder {
+                opacity: 1;
+                transition: 0.2s;
+            }
+            .floatLabel input::placeholder,
+            .floatLabel textarea::placeholder {
+                opacity: 0.4;
+                -webkit-transition: 0.2s;
+                transition: 0.2s;
+            }
+            .floatLabel input:placeholder-shown:not(:focus)::-webkit-input-placeholder,
+            .floatLabel textarea:placeholder-shown:not(:focus)::-webkit-input-placeholder {
+                opacity: 0;
+            }
+            .floatLabel input:placeholder-shown:not(:focus)::-moz-placeholder,
+            .floatLabel textarea:placeholder-shown:not(:focus)::-moz-placeholder {
+                opacity: 0;
+            }
+            .floatLabel input:placeholder-shown:not(:focus):-ms-input-placeholder,
+            .floatLabel textarea:placeholder-shown:not(:focus):-ms-input-placeholder {
+                opacity: 0;
+            }
+            .floatLabel select:not(:valid) + label,
+            .floatLabel input:placeholder-shown:not(:focus)::placeholder,
+            .floatLabel textarea:placeholder-shown:not(:focus)::placeholder {
+                opacity: 0;
+            }
+            .floatLabel input:placeholder-shown:not(:focus) + *,
+            .floatLabel textarea:placeholder-shown:not(:focus) + * {
+                font-size: 1.1em;
+                opacity: 0.5;
+                top: 0.4em;
+            }
+            .floatLabelButton,
+            .floatLabel select,
+            .floatLabel input,
+            .floatLabel textarea {
+                font-size: 1.1em;
+                line-height: 1.3em;
+                padding: 0.4em 0.5em 0.3em;
+                border: 0;
+                color: #000;
+                background: #fff;
+                width: 100%;
+                outline: #000 solid 1px;
+                box-shadow: 4px 4px 0 #555;
+                -webkit-transition: 0.1s;
+                transition: 0.1s;
+            }
+
+            .floatLabel textarea:placeholder-shown {
+                height: 2.5em;
+                -webkit-transition: 0.2s;
+                transition: 0.2s;
+            }
+            .floatLabel textarea,
+            .floatLabel textarea:focus {
+                height: 15em;
+                -webkit-transition: 0.3s;
+                transition: 0.3s;
+            }
+
+            .floatLabel select {
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                background-image: url("data:image/svg+xml,<svg aria-hidden='true' focusable='false' data-prefix='fas' data-icon='chevron-down' class='svg-inline--fa fa-chevron-down fa-w-14' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'><path fill='currentColor' d='M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z'></path></svg>");
+
+                background-repeat: no-repeat, repeat;
+                background-position: right 0.7em top 50%, 0 0;
+                background-size: 0.65em auto, 100%;
+            }
+
+            .floatLabel select:focus {
+                background-image: url("data:image/svg+xml,<svg aria-hidden='true' focusable='false' data-prefix='fas' data-icon='chevron-left' class='svg-inline--fa fa-chevron-left fa-w-10' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'><path fill='currentColor' d='M34.52 239.03L228.87 44.69c9.37-9.37 24.57-9.37 33.94 0l22.67 22.67c9.36 9.36 9.37 24.52.04 33.9L131.49 256l154.02 154.75c9.34 9.38 9.32 24.54-.04 33.9l-22.67 22.67c-9.37 9.37-24.57 9.37-33.94 0L34.52 272.97c-9.37-9.37-9.37-24.57 0-33.94z'></path></svg>");
+            }
+
+            /* .floatLabel option[value=''][disabled]  */
+            .floatLabel select option:checked {
+                display: none;
+            }
+            .floatLabel select:not(:valid),
+            .floatLabel option.placeholder {
+                color: #999;
+            }
+            .floatLabel option:not([value='']) {
+                color: #000;
+            }
+
+            .floatLabelButton {
+                width: 45% !important;
+                padding: 0.35em 0.5em 0.35em !important;
+                cursor: pointer;
+            }
+            .floatLabel select:hover,
+            .floatLabel input:hover,
+            .floatLabel textarea:hover,
+            .floatLabelButton:hover {
+                box-shadow: 4px 4px 0 #777;
+                -webkit-transition: 0.1s;
+                transition: 0.1s;
+            }
+            .floatLabel select:focus,
+            .floatLabel input:focus,
+            .floatLabel textarea:focus,
+            .floatLabelButton:active {
+                box-shadow: 2px 2px 0 #777;
+                transform: translate(2px, 2px);
+                -webkit-transition: 0.1s;
+                transition: 0.1s;
+            }
+        </style>
+    </head>
+
+    <body class="center">
+        <fieldset>
+            <legend>New Item</legend>
+            <form id="form" class="floatLabel" autocomplete="off">
+                <div class="inputGroupp">
+                    <div>
+                        <input id="first" type="text" placeholder="Name" value="Name" />
+                        <label for="first">First</label>
+                    </div>
+
+                    <div>
+                        <input id="last" type="text" placeholder="Surname" />
+                        <label for="last">Last</label>
+                    </div>
+                </div>
+
+                <div>
+                    <input type="email" placeholder="email@example.com" />
+                    <label>Email</label>
+                </div>
+
+                <div>
+                    <input type="password" placeholder="••••••••" />
+                    <label>Password</label>
+                </div>
+                <div>
+                    <select name="cars" id="cars" form="carform" required>
+                        <option value="" class="placeholder" selected>Choose a car</option>
+                        <option value="volvo">Volvo</option>
+                        <option value="saab">Saab</option>
+                        <option value="opel">Opel</option>
+                        <option value="audi">Audi</option>
+                    </select>
+                    <label for="cars">Your Car</label>
+                </div>
+
+                <div>
+                    <textarea placeholder="No newsletter please!"></textarea>
+                    <label>Notes</label>
+                </div>
+
+                <input class="floatLabelButton" type="submit" value="send" />
+            </form>
+        </fieldset>
+    </body>
+</html>
