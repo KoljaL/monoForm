@@ -26,7 +26,7 @@
                 max-width: max-content;
                 padding: 1em;
                 margin: 2em auto;
-                border: 5px solid #00000015;
+                /* border: 5px solid #00000015; */
                 border-radius: 5px;
             }
 
@@ -38,7 +38,7 @@
                 border: 1px solid #000;
                 box-shadow: 4px 4px 0 #555;
             }
-            .select {
+            .RadioSelect {
                 font-family: 'Public Sans', sans-serif;
                 position: relative;
                 overflow: hidden;
@@ -47,29 +47,28 @@
                 width: 330px;
                 height: 100%;
                 font-size: 12px;
-
                 border: 1px solid #000;
                 box-shadow: 4px 4px 0 #555;
             }
-            .select > i.toggle {
+            .RadioSelect > i.toggle {
                 position: absolute;
                 z-index: 4;
                 right: 1.5em;
                 top: 1.6em;
                 color: #ccc;
             }
-            .select .title,
-            .select .placeholder {
+            .RadioSelect .title,
+            .RadioSelect .placeholder {
                 position: relative;
                 display: block;
                 width: 100%;
                 height: 100%;
                 padding: 1.5em 2em;
                 background: rgba(255, 255, 255, 1);
-                border-top: 1px solid #777;
+                border-top: 1px solid #00000015;
                 cursor: pointer;
             }
-            .select > input {
+            .RadioSelect > input {
                 position: absolute;
                 left: 0px;
                 top: 0px;
@@ -80,31 +79,31 @@
                 opacity: 0;
                 cursor: pointer;
             }
-            .select > input:checked ~ i.toggle.icon-arrow-down {
+            .RadioSelect > input:checked ~ i.toggle.icon-arrow-down {
                 display: none;
             }
-            .select > input:checked ~ i.toggle.icon-arrow-up {
+            .RadioSelect > input:checked ~ i.toggle.icon-arrow-up {
                 display: block;
             }
-            .select > input:checked div.options label.option .title {
+            .RadioSelect > input:checked div label.option .title {
                 display: none !important;
             }
-            .select > input:not(:checked) {
+            .RadioSelect > input:not(:checked) {
                 z-index: 4;
             }
-            .select > input:not(:checked) ~ label.option > span.title {
+            .RadioSelect > input:not(:checked) ~ label.option > span.title {
                 display: none;
             }
-            .select > input:not(:checked) ~ i.toggle.icon-arrow-up {
+            .RadioSelect > input:not(:checked) ~ i.toggle.icon-arrow-up {
                 display: none;
             }
-            .select > input:not(:checked) ~ i.toggle.icon-arrow-down {
+            .RadioSelect > input:not(:checked) ~ i.toggle.icon-arrow-down {
                 display: block;
             }
-            .select > input:disabled {
+            .RadioSelect > input:disabled {
                 cursor: no-drop;
             }
-            .select > span.placeholder {
+            .RadioSelect > span.placeholder {
                 position: relative;
                 z-index: 0;
                 display: inline-block;
@@ -112,98 +111,133 @@
                 color: #999;
                 border-top: 0px;
             }
-            .select label.option {
+            .RadioSelect label.option {
                 display: block;
                 overflow: hidden;
                 z-index: 1;
                 width: 100%;
                 transition: all 1s ease-out;
             }
-            .select label.option span.title {
+            .RadioSelect label.option span.title {
                 position: relative;
                 z-index: 2;
-                transition: background 0.3s ease-out;
             }
-            .select label.option span.title i.icon {
+            .RadioSelect label.option span.title i.icon {
                 padding-right: 8px;
                 color: rgba(146, 168, 209, 1);
             }
-            .select label.option span.title:hover {
-                color: #fff;
-                background: rgba(255, 255, 255, 0.3);
-                box-shadow: inset 0px 1px 0px rgba(0, 0, 0, 0.1);
+            .RadioSelect label.option span.title:hover {
+                background: #00000015;
             }
-            .select label.option input {
+            .RadioSelect label.option input {
                 display: none;
             }
-            .select label.option input:checked ~ span.title {
+            .RadioSelect label.option input:checked ~ span.title {
                 position: absolute;
                 display: block;
                 z-index: 3;
                 top: 0px;
                 font-size: 1em;
                 background: #fff;
-                border-top: 0px; 
+                border-top: 0px;
                 box-shadow: none;
                 color: inherit;
                 width: 100%;
-            }
-            .animated {
-                -webkit-animation-duration: 1s;
-                animation-duration: 1s;
-                -webkit-animation-fill-mode: both;
-                animation-fill-mode: both;
-            }
-            @-webkit-keyframes fadeIn {
-                from {
-                    opacity: 0;
-                }
-
-                to {
-                    opacity: 1;
-                }
-            }
-
-            @keyframes fadeIn {
-                from {
-                    opacity: 0;
-                }
-
-                to {
-                    opacity: 1;
-                }
-            }
-
-            .fadeIn {
-                -webkit-animation-name: fadeIn;
-                animation-name: fadeIn;
             }
         </style>
     </head>
     <body class="center">
         <fieldset>
-            <div class="select">
+            <div class="RadioSelect">
                 <input type="radio" name="option" />
                 <i class="toggle icon icon-arrow-down"></i>
                 <i class="toggle icon icon-arrow-up"></i>
                 <span class="placeholder">Choose...</span>
                 <label class="option">
                     <input type="radio" name="option" />
-                    <span class="title animated fadeIn"><i class="icon icon-speedometer"></i>Speedometer</span>
+                    <span class="title"><i class="icon icon-speedometer"></i>Speedometer</span>
                 </label>
                 <label class="option">
                     <input type="radio" name="option" />
-                    <span class="title animated fadeIn"><i class="icon icon-fire"></i>Fire</span>
+                    <span class="title"><i class="icon icon-fire"></i>Fire</span>
                 </label>
                 <label class="option">
                     <input type="radio" name="option" />
-                    <span class="title animated fadeIn"><i class="icon icon-handbag"></i>Handbag</span>
+                    <span class="title"><i class="icon icon-handbag"></i>Handbag</span>
                 </label>
                 <label class="option">
                     <input type="radio" name="option" />
-                    <span class="title animated fadeIn"><i class="icon icon-badge"></i>Badge</span>
+                    <span class="title"><i class="icon icon-badge"></i>Badge</span>
                 </label>
             </div>
         </fieldset>
+        <br /><br />
+        <fieldset>
+            <div class="RadioSelect1">
+                <label class="placeholder">
+                    <input type="radio" name="option" />
+                    <!-- <i class="toggle icon icon-arrow-down"></i> -->
+                    <!-- <i class="toggle icon icon-arrow-up"></i> -->
+                    Choose...</label
+                >
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="option" />
+                        <span class="title"><i class="icon icon-speedometer"></i>Speedometer</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="option" />
+                        <span class="title"><i class="icon icon-fire"></i>Fire</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="option" />
+                        <span class="title"><i class="icon icon-handbag"></i>Handbag</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="option" />
+                        <span class="title"><i class="icon icon-badge"></i>Badge</span>
+                    </label>
+                </div>
+            </div>
+        </fieldset>
     </body>
+    <style>
+        .RadioSelect1 {
+            font-family: 'Public Sans', sans-serif;
+            position: relative;
+            overflow: hidden;
+            display: block;
+            margin: auto;
+            width: 330px;
+            height: 100%;
+            border: 1px solid #000;
+            box-shadow: 4px 4px 0 #555;
+        }
+        .RadioSelect1 input[type="radio"]{
+            /* display:none; */
+        }
+        .RadioSelect1 .options label{
+            display:block;
+        }
+
+        .RadioSelect1 > input:not(:checked) ~ div.options {
+            display: none;
+        }
+
+        .RadioSelect1 > input:not(:checked) ~ label.options > span.title {
+            display: none;
+        }
+
+        .RadioSelect1 .options input:checked ~ span.title {
+            position: absolute;
+            display: block;
+            z-index: 3;
+            top: 0px;
+            font-size: 1em;
+            background: #fff;
+            border-top: 0px;
+            box-shadow: none;
+            width: 100%;
+        }
+    </style>
 </html>
