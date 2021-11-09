@@ -1,243 +1,294 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=1, initial-scale=1.0" />
-        <link rel="shortcut icon" href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAD9/f0AAAAAAPT19AD///8A+vr6AP+EAADz8/MA/Pz8AP7+/gD5+fkA9PT0AO3t7QCRkZEAAAAAAAAAAAAAAAAAERERERERERURMzMzMzMxFRExERAAAIEVETEzEzAAgRURMRETMAABFREzMzN3d3EVETmZmZmZQRURMRERERFhFRE8qqqqoWEVETzMzMzBIRURO7MzMzMxFRExERERETEVETwzMzMxMRURPMzMzMExFREzMzMzMzEVERERERERERWAAgAAgAIAAIACAACAAgAAgAIAAIACAACAAgAAgAIAAIACAACAAgAAgAIAAIACAACAAgAAgAIAAIACAACAAgAA" />
-        <title>CSSonlySelect</title>
-        <style>
-            @import 'https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.3.2/css/simple-line-icons.min.css';
-            @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300&display=swap');
-
-            body {
-                position: relative;
-                max-width: 60rem;
-                background: #eee;
-                margin: 2rem auto;
-                display: flex;
-                align-items: flex-start;
-                flex-wrap: wrap;
-            }
-
-            .center {
-                position: relative;
-                width: 400px;
-                max-width: max-content;
-                padding: 1em;
-                margin: 2em auto;
-                /* border: 5px solid #00000015; */
-                border-radius: 5px;
-            }
-
-            fieldset {
-                padding: 1.5rem;
-                margin: 1em;
-                background: #fff;
-                width: 40rem;
-                border: 1px solid #000;
-                box-shadow: 4px 4px 0 #555;
-            }
-            .RadioSelect {
-                font-family: 'Public Sans', sans-serif;
-                position: relative;
-                overflow: hidden;
-                display: block;
-                margin: auto;
-                width: 330px;
-                height: 100%;
-                font-size: 12px;
-                border: 1px solid #000;
-                box-shadow: 4px 4px 0 #555;
-            }
-            .RadioSelect > i.toggle {
-                position: absolute;
-                z-index: 4;
-                right: 1.5em;
-                top: 1.6em;
-                color: #ccc;
-            }
-            .RadioSelect .title,
-            .RadioSelect .placeholder {
-                position: relative;
-                display: block;
-                width: 100%;
-                height: 100%;
-                padding: 1.5em 2em;
-                background: rgba(255, 255, 255, 1);
-                border-top: 1px solid #00000015;
-                cursor: pointer;
-            }
-            .RadioSelect > input {
-                position: absolute;
-                left: 0px;
-                top: 0px;
-                z-index: 1;
-                width: 100%;
-                height: 100%;
-                display: block;
-                opacity: 0;
-                cursor: pointer;
-            }
-            .RadioSelect > input:checked ~ i.toggle.icon-arrow-down {
-                display: none;
-            }
-            .RadioSelect > input:checked ~ i.toggle.icon-arrow-up {
-                display: block;
-            }
-            .RadioSelect > input:checked div label.option .title {
-                display: none !important;
-            }
-            .RadioSelect > input:not(:checked) {
-                z-index: 4;
-            }
-            .RadioSelect > input:not(:checked) ~ label.option > span.title {
-                display: none;
-            }
-            .RadioSelect > input:not(:checked) ~ i.toggle.icon-arrow-up {
-                display: none;
-            }
-            .RadioSelect > input:not(:checked) ~ i.toggle.icon-arrow-down {
-                display: block;
-            }
-            .RadioSelect > input:disabled {
-                cursor: no-drop;
-            }
-            .RadioSelect > span.placeholder {
-                position: relative;
-                z-index: 0;
-                display: inline-block;
-                width: 100%;
-                color: #999;
-                border-top: 0px;
-            }
-            .RadioSelect label.option {
-                display: block;
-                overflow: hidden;
-                z-index: 1;
-                width: 100%;
-                transition: all 1s ease-out;
-            }
-            .RadioSelect label.option span.title {
-                position: relative;
-                z-index: 2;
-            }
-            .RadioSelect label.option span.title i.icon {
-                padding-right: 8px;
-                color: rgba(146, 168, 209, 1);
-            }
-            .RadioSelect label.option span.title:hover {
-                background: #00000015;
-            }
-            .RadioSelect label.option input {
-                display: none;
-            }
-            .RadioSelect label.option input:checked ~ span.title {
-                position: absolute;
-                display: block;
-                z-index: 3;
-                top: 0px;
-                font-size: 1em;
-                background: #fff;
-                border-top: 0px;
-                box-shadow: none;
-                color: inherit;
-                width: 100%;
-            }
-        </style>
-    </head>
-    <body class="center">
-        <fieldset>
-            <div class="RadioSelect">
-                <input type="radio" name="option" />
-                <i class="toggle icon icon-arrow-down"></i>
-                <i class="toggle icon icon-arrow-up"></i>
-                <span class="placeholder">Choose...</span>
-                <label class="option">
-                    <input type="radio" name="option" />
-                    <span class="title"><i class="icon icon-speedometer"></i>Speedometer</span>
-                </label>
-                <label class="option">
-                    <input type="radio" name="option" />
-                    <span class="title"><i class="icon icon-fire"></i>Fire</span>
-                </label>
-                <label class="option">
-                    <input type="radio" name="option" />
-                    <span class="title"><i class="icon icon-handbag"></i>Handbag</span>
-                </label>
-                <label class="option">
-                    <input type="radio" name="option" />
-                    <span class="title"><i class="icon icon-badge"></i>Badge</span>
-                </label>
-            </div>
-        </fieldset>
-        <br /><br />
-        <fieldset>
-            <div class="RadioSelect1">
-                <label class="placeholder">
-                    <input type="radio" name="option" />
-                    <!-- <i class="toggle icon icon-arrow-down"></i> -->
-                    <!-- <i class="toggle icon icon-arrow-up"></i> -->
-                    Choose...</label
-                >
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="option" />
-                        <span class="title"><i class="icon icon-speedometer"></i>Speedometer</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="option" />
-                        <span class="title"><i class="icon icon-fire"></i>Fire</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="option" />
-                        <span class="title"><i class="icon icon-handbag"></i>Handbag</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="option" />
-                        <span class="title"><i class="icon icon-badge"></i>Badge</span>
-                    </label>
-                </div>
-            </div>
-        </fieldset>
-    </body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=1, initial-scale=1.0" />
+    <link rel="shortcut icon" href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAD9/f0AAAAAAPT19AD///8A+vr6AP+EAADz8/MA/Pz8AP7+/gD5+fkA9PT0AO3t7QCRkZEAAAAAAAAAAAAAAAAAERERERERERURMzMzMzMxFRExERAAAIEVETEzEzAAgRURMRETMAABFREzMzN3d3EVETmZmZmZQRURMRERERFhFRE8qqqqoWEVETzMzMzBIRURO7MzMzMxFRExERERETEVETwzMzMxMRURPMzMzMExFREzMzMzMzEVERERERERERWAAgAAgAIAAIACAACAAgAAgAIAAIACAACAAgAAgAIAAIACAACAAgAAgAIAAIACAACAAgAAgAIAAIACAACAAgAA" />
+    <title>CSSonlySelect</title>
     <style>
-        .RadioSelect1 {
-            font-family: 'Public Sans', sans-serif;
-            position: relative;
-            overflow: hidden;
-            display: block;
-            margin: auto;
-            width: 330px;
-            height: 100%;
-            border: 1px solid #000;
-            box-shadow: 4px 4px 0 #555;
-        }
-        .RadioSelect1 input[type="radio"]{
-            /* display:none; */
-        }
-        .RadioSelect1 .options label{
-            display:block;
-        }
+      @import "https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.3.2/css/simple-line-icons.min.css";
+      @import url("https://fonts.googleapis.com/css2?family=Public+Sans:wght@300&display=swap");
 
-        .RadioSelect1 > input:not(:checked) ~ div.options {
-            display: none;
-        }
+      body {
+        position: relative;
+        max-width: 60rem;
+        background: #eee;
+        margin: 2rem auto;
+        display: flex;
+        align-items: flex-start;
+        flex-wrap: wrap;
+      }
 
-        .RadioSelect1 > input:not(:checked) ~ label.options > span.title {
-            display: none;
-        }
+      .center {
+        position: relative;
+        width: 400px;
+        max-width: max-content;
+        padding: 1em;
+        margin: 2em auto;
+        /* border: 5px solid #00000015; */
+        border-radius: 5px;
+      }
 
-        .RadioSelect1 .options input:checked ~ span.title {
-            position: absolute;
-            display: block;
-            z-index: 3;
-            top: 0px;
-            font-size: 1em;
-            background: #fff;
-            border-top: 0px;
-            box-shadow: none;
-            width: 100%;
-        }
+      fieldset {
+        padding: 1.5rem;
+        margin: 1em;
+        background: #fff;
+        width: 40rem;
+        border: 1px solid #000;
+        box-shadow: 4px 4px 0 #555;
+        position: relative;
+        z-index: 1;
+      }
+      .RadioSelect {
+        font-family: "Public Sans", sans-serif;
+        position: relative;
+        overflow: hidden;
+        display: block;
+        margin: auto;
+        width: 330px;
+        height: 100%;
+        font-size: 12px;
+        border: 1px solid #000;
+        box-shadow: 4px 4px 0 #555;
+      }
+      .RadioSelect > i.toggle {
+        position: absolute;
+        z-index: 4;
+        right: 1.5em;
+        top: 1.6em;
+        color: #ccc;
+      }
+      .RadioSelect .title,
+      .RadioSelect .placeholder {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 100%;
+        padding: 1.5em 2em;
+        background: rgba(255, 255, 255, 1);
+        border-top: 1px solid #00000015;
+        cursor: pointer;
+      }
+      .RadioSelect > input {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        display: block;
+        opacity: 0;
+        cursor: pointer;
+      }
+      .RadioSelect > input:checked ~ i.toggle.icon-arrow-down {
+        display: none;
+      }
+      .RadioSelect > input:checked ~ i.toggle.icon-arrow-up {
+        display: block;
+      }
+      .RadioSelect > input:checked div label.option .title {
+        display: none !important;
+      }
+      .RadioSelect > input:not(:checked) {
+        z-index: 4;
+      }
+      .RadioSelect > input:not(:checked) ~ label.option > span.title {
+        display: none;
+      }
+      .RadioSelect > input:not(:checked) ~ i.toggle.icon-arrow-up {
+        display: none;
+      }
+      .RadioSelect > input:not(:checked) ~ i.toggle.icon-arrow-down {
+        display: block;
+      }
+      .RadioSelect > input:disabled {
+        cursor: no-drop;
+      }
+      .RadioSelect > span.placeholder {
+        position: relative;
+        z-index: 0;
+        display: inline-block;
+        width: 100%;
+        color: #999;
+        border-top: 0px;
+      }
+      .RadioSelect label.option {
+        display: block;
+        overflow: hidden;
+        z-index: 1;
+        width: 100%;
+        transition: all 1s ease-out;
+      }
+      .RadioSelect label.option span.title {
+        position: relative;
+        z-index: 2;
+      }
+      .RadioSelect label.option span.title i.icon {
+        padding-right: 8px;
+        color: rgba(146, 168, 209, 1);
+      }
+      .RadioSelect label.option span.title:hover {
+        background: #00000015;
+      }
+      .RadioSelect label.option input {
+        display: none;
+      }
+      .RadioSelect label.option input:checked ~ span.title {
+        position: absolute;
+        display: block;
+        z-index: 3;
+        top: 0px;
+        font-size: 1em;
+        background: #fff;
+        border-top: 0px;
+        box-shadow: none;
+        color: inherit;
+        width: 100%;
+      }
     </style>
+  </head>
+  <body class="center">
+    <!-- <fieldset>
+      <div class="RadioSelect">
+        <input type="radio" name="option" />
+        <i class="toggle icon icon-arrow-down"></i>
+        <i class="toggle icon icon-arrow-up"></i>
+        <span class="placeholder">Choose...</span>
+        <label class="option">
+          <input type="radio" name="option" />
+          <span class="title"><i class="icon icon-speedometer"></i>Speedometer</span>
+        </label>
+        <label class="option">
+          <input type="radio" name="option" />
+          <span class="title"><i class="icon icon-fire"></i>Fire</span>
+        </label>
+        <label class="option">
+          <input type="radio" name="option" />
+          <span class="title"><i class="icon icon-handbag"></i>Handbag</span>
+        </label>
+        <label class="option">
+          <input type="radio" name="option" />
+          <span class="title"><i class="icon icon-badge"></i>Badge</span>
+        </label>
+      </div>
+    </fieldset> -->
+    <br /><br />
+    <!-- https://davidwalsh.name/css-content-attr -->
+    <fieldset>
+      <form action="" autocomplete="off">
+        <div class="RadioSelect1">
+          <input type="radio" name="option" id="openSelect" required="required" />
+          <label class="placeholder" for="openSelect">
+            Choose...
+
+            <i class="toggle icon icon-arrow-down"></i>
+            <i class="toggle icon icon-arrow-up"></i>
+          </label>
+          <div class="options">
+            <label class="option">
+              <input type="radio" name="option" />
+              <span class="title"><i class="icon icon-speedometer"></i>Speedometer</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="option" />
+              <span class="title"><i class="icon icon-fire"></i>Fire</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="option" />
+              <span class="title"><i class="icon icon-handbag"></i> Handbag</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="option" />
+              <span class="title"><i class="icon icon-badge"></i>Badge</span>
+            </label>
+          </div>
+        </div>
+      </form>
+    </fieldset>
+  </body>
+  <style>
+    /* set radioselect div */
+    .RadioSelect1 {
+      font-family: "Public Sans", sans-serif;
+      position: relative;
+      overflow: hidden;
+      display: block;
+      margin: auto;
+      line-height: 2em;
+      width: 330px;
+      height: 100%;
+      border: 1px solid #000;
+      box-shadow: 4px 4px 0 #555;
+    }
+
+    .RadioSelect1 label {
+      line-height: 2em;
+    }
+    /* hide radio inputs */
+    .RadioSelect1 input[type="radio"] {
+      /* position: relative; */
+      opacity: 0;
+      width: 0;
+      padding: 0;
+      margin: 0;
+    }
+    /* dropdown arrow  */
+    .RadioSelect1 .placeholder label span{
+        transform: rotate(180deg);
+    }
+    /* set option items */
+    .RadioSelect1 .options label {
+      display: block;
+      cursor: pointer;
+    }
+
+    .RadioSelect1 input:checked ~ .placeholder {
+    }
+    /* set placeholder option if another option is checked */
+    .RadioSelect1 input:not(:checked) ~ .placeholder {
+      position: absolute;
+      top: 0px;
+      z-index: 10;
+      opacity: 0;
+    }
+
+    /* set placeholder on start */
+    .RadioSelect1 input:not(:valid) ~ .placeholder {
+      position: relative;
+      opacity: 1;
+      cursor: pointer;
+    }
+
+    /* hide options (all items) if placeholder  radio is not checked  */
+    .RadioSelect1 input:not(:checked) ~ div.options {
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.5s linear;
+    }
+
+    /* roll out options if placeholder  radio is checked  */
+    .RadioSelect1 input:checked ~ div.options {
+      position: absolute;
+      position: relative;
+      top:-1px;
+      z-index: 55;
+      max-height: 300px;
+      border-top: 1px solid #555;
+      transition: all 0.5s linear;
+    }
+
+    /* move checked option item to top  */
+    .RadioSelect1 .options input:checked ~ span.title {
+      position: absolute;
+      /* position: fixed; */
+      display: block;
+      z-index: 3;
+      top: 0px;
+      padding-left: 6px;
+      font-size: 1em;
+      border-bottom: 1px solid #555;
+      width: 100%;
+    }
+  </style>
 </html>
