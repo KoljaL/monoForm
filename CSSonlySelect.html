@@ -180,20 +180,16 @@
             <form action="" autocomplete="off">
                 <div class="RadioSelect1">
                     <input type="radio" name="option" id="openSelect" required="required" />
-                    <label class="placeholder" for="openSelect">
-                        Choose...
-
-                        <i class="toggle icon icon-arrow-down"></i>
-                        <i class="toggle icon icon-arrow-up"></i>
-                    </label>
+                    <label class="placeholder" for="openSelect"><i class="icon icon-tag"></i> Choose</label>
+                    <span class="arrow">&#10095;</span>
                     <div class="options">
                         <label class="option">
                             <input type="radio" name="option" />
-                            <span class="title"><i class="icon icon-speedometer"></i>Speedometer</span>
+                            <span class="title"><i class="icon icon-speedometer"></i> Speedometer</span>
                         </label>
                         <label class="option">
                             <input type="radio" name="option" />
-                            <span class="title"><i class="icon icon-fire"></i>Fire</span>
+                            <span class="title"><i class="icon icon-fire"></i> Fire</span>
                         </label>
                         <label class="option">
                             <input type="radio" name="option" />
@@ -201,7 +197,7 @@
                         </label>
                         <label class="option">
                             <input type="radio" name="option" />
-                            <span class="title"><i class="icon icon-badge"></i>Badge</span>
+                            <span class="title"><i class="icon icon-badge"></i> Badge</span>
                         </label>
                     </div>
                 </div>
@@ -224,7 +220,7 @@
         }
 
         .RadioSelect1 label {
-            line-height: 2em;
+            line-height: 2em!important;
         }
         /* hide radio inputs */
         .RadioSelect1 input[type='radio'] {
@@ -234,36 +230,63 @@
             padding: 0;
             margin: 0;
         }
-        /* dropdown arrow  */
-        .RadioSelect1 .placeholder label span {
+
+        /* dropdown arrow open */
+        .RadioSelect1 input:checked ~  .arrow {
+            position: absolute;
+            right: 10px;
+            content: '\276F';
+            display: inline-block;
+            transition: all 0.2s linear;
+            opacity: 1;
+            /* visibility: visible; */
             transform: rotate(180deg);
+
         }
+
+        /* dropdown arrow close */
+        .RadioSelect1 input:not(:checked) ~  .arrow {
+            position: absolute;
+            right: 10px;
+            content: '\276F';
+            display: inline-block;
+            transform: rotate(90deg);
+            transition: all 0.2s linear;
+            opacity: 1;
+            /* visibility: visible; */
+        }
+
         /* set option items */
         .RadioSelect1 .options label {
             display: block;
             cursor: pointer;
         }
 
-        .RadioSelect1 input:checked ~ .placeholder {
-        }
         /* set placeholder option if another option is checked */
         .RadioSelect1 input:not(:checked) ~ .placeholder {
             position: absolute;
             top: 0px;
             z-index: 10;
+            /* visibility: hidden; */
+            width: 100%;
             opacity: 0;
         }
 
         /* set placeholder on start */
         .RadioSelect1 input:not(:valid) ~ .placeholder {
-            position: relative;
+            position: absolute;
+            padding-left: 4px;
             opacity: 1;
+            /* visibility: visible; */
+            width: 100%;
             cursor: pointer;
         }
 
         /* hide options (all items) if placeholder  radio is not checked  */
         .RadioSelect1 input:not(:checked) ~ div.options {
+            /* position: relative; */
             max-height: 0;
+            width: 100%;
             overflow: hidden;
             transition: all 0.5s linear;
         }
@@ -283,6 +306,7 @@
         .RadioSelect1 .options input:checked ~ span.title {
             position: absolute;
             /* position: fixed; */
+            /* position: relative; */
             display: block;
             z-index: 3;
             top: 0px;
