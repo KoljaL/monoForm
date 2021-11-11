@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <!-- <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css'> -->
+    <link rel='stylesheet' href='https://cdn.form.io/formiojs/formio.full.min.css'>
+    <script src='https://cdn.form.io/formiojs/formio.full.min.js'></script>
+    <script type='text/javascript'>
+      window.onload = function() {
+        Formio.builder(document.getElementById('builder'), {}, {});
+      };
+    </script>
+    
+    </head>
+    <body>
+      <div id='formio'></div>
+      <div id='formio1'></div>
+
+
+    <!-- <div id='builder'></div> -->
+
+    <script type='text/javascript'>
+        // window.onload = function() {
+        //   Formio.createForm(document.getElementById('formio'), 'https://examples.form.io/example');
+        // };
+
+        Formio.createForm(document.getElementById('formio1'), {
+  components: [
+    {
+      type: 'textfield',
+      key: 'firstName',
+      label: 'First Name',
+      placeholder: 'Enter your first name.',
+      input: true
+    },
+    {
+      type: 'textfield',
+      key: 'lastName',
+      label: 'Last Name',
+      placeholder: 'Enter your last name',
+      input: true
+    },
+    {
+      type: 'button',
+      action: 'submit',
+      label: 'Submit',
+      theme: 'primary'
+    }
+  ]
+});
+
+      </script>
+  </body>
+</html>
