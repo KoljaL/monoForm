@@ -1,270 +1,268 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=1, initial-scale=1.0" />
-        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-        <title>CSSonlySelect</title>
-        <style>
-            @import 'https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.3.2/css/simple-line-icons.min.css';
-            @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300&display=swap');
-
-            body {
-                position: relative;
-                max-width: 60rem;
-                background: #eee;
-                margin: 2rem auto;
-                display: flex;
-                align-items: flex-start;
-                flex-wrap: wrap;
-            }
-
-            .center {
-                position: relative;
-                width: 400px;
-                max-width: max-content;
-                padding: 1em;
-                margin: 2em auto;
-                border-radius: 5px;
-            }
-
-            fieldset {
-                padding: 1.5rem;
-                margin: 1em;
-                background: #fff;
-                width: 40rem;
-                height: 5em;
-                border: 1px solid #000;
-                box-shadow: 4px 4px 0 #555;
-                position: relative;
-                z-index: 1;
-            }
-        </style>
-    </head>
-    <body class="center">
-        <fieldset>
-            <form action="" autocomplete="off">
-                <div class="RadioSelect">
-                    <input type="radio" name="option" id="openSelect" required="required" />
-                    <label class="placeholder" for="openSelect">Dinosaurs</label>
-                    <span class="altPlaceholder">choose your favorite</span>
-                    <span class="arrow"></span>
-                    <div class="options">
-                        <label class="option">
-                            <input type="radio" name="option" />
-                            <span class="title">Triceratops</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="option" />
-                            <span class="title">Brachiosaurus</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="option" />
-                            <span class="title">Iguanodon</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="option" />
-                            <span class="title">Dryosaurus</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="option" />
-                            <span class="title">Tenontosaurus</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="option" />
-                            <span class="title">Argentinosaurus</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="option" />
-                            <span class="title">Brontosaurus</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="option" />
-                            <span class="title">Tyrannosaurus</span>
-                        </label>
-                    </div>
-                </div>
-            </form>
-        </fieldset>
-    </body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=1, initial-scale=1.0" />
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <title>CSSonlySelect</title>
     <style>
-        /* set radioselect div */
-        .RadioSelect {
-            font-family: 'Public Sans', sans-serif;
-            position: relative;
-            /* position: absolute; */
-            overflow: hidden;
-            display: block;
-            margin: auto;
-            line-height: 2em;
-            width: 330px;
-            height: max-content;
-            border: 1px solid #000;
-            box-shadow: 4px 4px 0 #555;
-        }
+      @import "https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.3.2/css/simple-line-icons.min.css";
+      @import url("https://fonts.googleapis.com/css2?family=Public+Sans:wght@300&display=swap");
 
-        .RadioSelect label {
-            line-height: 2em !important;
-            /* line-height: 0em; */
-        }
-        /* hide radio inputs */
-        .RadioSelect input[type='radio'] {
-            display: none;
-        }
-        /* dropdown arrow */
-        .RadioSelect .arrow {
-            position: absolute;
-            right: 0;
-            top: 0;
-            content: url("data:image/svg+xml; utf8, <svg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 451.847 451.847' style='enable-background:new 0 0 451.847 451.847;' xml:space='preserve'><path d='M97.141,225.92c0-8.095,3.091-16.192,9.259-22.366L300.689,9.27c12.359-12.359,32.397-12.359,44.751,0 c12.354,12.354,12.354,32.388,0,44.748L173.525,225.92l171.903,171.909c12.354,12.354,12.354,32.391,0,44.744	c-12.354,12.365-32.386,12.365-44.745,0l-194.29-194.281C100.226,242.115,97.141,234.018,97.141,225.92z'/></svg>");
-            width: 15px;
-            height: 15px;
-            margin: 8px;
-            opacity: 1;
-            transition: transform 0.2s linear 0.25s;
-            display: inline-block;
-        }
-        /* dropdown arrow open */
-        .RadioSelect input:checked ~ .arrow {
-            transition: transform 0.2s linear;
-            transform: rotate(-90deg);
-        }
+      body {
+        position: relative;
+        max-width: 60rem;
+        background: #eee;
+        margin: 2rem auto;
+        display: flex;
+        align-items: flex-start;
+        flex-wrap: wrap;
+      }
 
-        /* dropdown arrow close */
-        .RadioSelect input:not(:checked) ~ .arrow {
-            /* transition: transform 0.2s linear 0.25s; */
-            width: inherit;
-        }
+      .center {
+        position: relative;
+        width: 400px;
+        max-width: max-content;
+        padding: 1em;
+        margin: 2em auto;
+        border-radius: 5px;
+      }
 
-        /* set option items */
-        .RadioSelect .options label {
-            display: block;
-            cursor: pointer;
-        }
+      fieldset {
+        padding: 1.5rem;
+        margin: 1em;
+        background: #fff;
+        width: 40rem;
+        height: 5em;
+        border: 1px solid #000;
+        box-shadow: 4px 4px 0 #555;
+        position: relative;
+        z-index: 1;
+      }
+    </style>
+  </head>
+  <body class="center">
+    <fieldset>
+      <form action="" autocomplete="off">
+        <div class="RadioSelect">
+          <input type="radio" name="option" id="openSelect" required="required" />
+          <label class="placeholder" for="openSelect">Dinosaurs</label>
+          <span class="altPlaceholder">choose your favorite</span>
+          <span class="arrow"></span>
+          <div class="options">
+            <label class="option">
+              <input type="radio" name="option" />
+              <span class="title">Triceratops</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="option" />
+              <span class="title">Brachiosaurus</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="option" />
+              <span class="title">Iguanodon</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="option" />
+              <span class="title">Dryosaurus</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="option" />
+              <span class="title">Tenontosaurus</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="option" />
+              <span class="title">Argentinosaurus</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="option" />
+              <span class="title">Brontosaurus</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="option" />
+              <span class="title">Tyrannosaurus</span>
+            </label>
+          </div>
+        </div>
+      </form>
+    </fieldset>
+  </body>
+  <style>
+    /* set radioselect div */
+    .RadioSelect {
+      font-family: "Public Sans", sans-serif;
+      position: relative;
+      /* position: absolute; */
+      overflow: hidden;
+      display: block;
+      margin: auto;
+      line-height: 2em;
+      width: 330px;
+      height: max-content;
+      border: 1px solid #000;
+      box-shadow: 4px 4px 0 #555;
+    }
 
-        /* set placeholder */
-        .RadioSelect .placeholder {
-            padding-left: 6px;
-            position: relative;
-            display: inline-block;
-            top: 0px;
-            z-index: 10;
-            width: 100%;
-            cursor: pointer;
-        }
-        /* set placeholder option if another option is checked */
-        .RadioSelect input:not(:checked) ~ .placeholder {
-            /* opacity: 0; */
-            /* NEW */
-            left: 5px;
-            top: -10px;
-            font-size: 80%;
-            background: white;
-            padding: 0 2px;
-            color: #555;
-            -webkit-transition: 0.2s;
-            transition: 0.2s;
-            /* NEW */
-        }
+    .RadioSelect label {
+      line-height: 2em !important;
+      /* line-height: 0em; */
+    }
+    /* hide radio inputs */
+    .RadioSelect input[type="radio"] {
+      display: none;
+    }
+    /* dropdown arrow */
+    .RadioSelect .arrow,
+    .RadioSelect input:not(:checked) ~ .arrow {
+      position: absolute;
+      right: 0;
+      top: 0;
+      content: url("data:image/svg+xml; utf8, <svg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 451.847 451.847' style='enable-background:new 0 0 451.847 451.847;' xml:space='preserve'><path d='M97.141,225.92c0-8.095,3.091-16.192,9.259-22.366L300.689,9.27c12.359-12.359,32.397-12.359,44.751,0 c12.354,12.354,12.354,32.388,0,44.748L173.525,225.92l171.903,171.909c12.354,12.354,12.354,32.391,0,44.744	c-12.354,12.365-32.386,12.365-44.745,0l-194.29-194.281C100.226,242.115,97.141,234.018,97.141,225.92z'/></svg>");
+      width: 15px;
+      height: 15px;
+      margin: 8px;
+      opacity: 1;
+      transition: transform 0.2s linear 0.25s;
+      display: inline-block;
+    }
+    /* dropdown arrow open */
+    .RadioSelect input:checked ~ .arrow {
+      transition: transform 0.2s linear;
+      transform: rotate(-90deg);
+    }
 
-        /* set placeholder option if another option is checked */
-        .RadioSelect input:checked ~ .placeholder {
-            /* NEW */
-            left: 5px;
-            top: -10px;
-            font-size: 80%;
-            background: white;
-            padding: 0 2px;
-            color: #555;
-            -webkit-transition: 0.2s;
-            transition: 0.2s;
-            /* NEW */
-            /* display: none; */
-            /* width:0; */
-            /* position: relative; */
-            /* position: absolute; */
-        }
+    /* dropdown arrow close */
+    .RadioSelect input:not(:checked) ~ .arrow {
+      /* transition: transform 0.2s linear 0.25s; */
+      /* width: inherit; */
+    }
 
-        /* set alt Placeholder */
-        .RadioSelect input:not(:valid) ~ .altPlaceholder,
-        .RadioSelect input:not(:checked) ~ .altPlaceholder {
-            display: none;
-        }
-        .RadioSelect input:checked ~ .altPlaceholder {
-            width: inherit;
-            /* display: inline-block; */
-            /* NEW */
-            /* position: absolute;
-            left: 5px;
-            top: -10px;
-            font-size: 80%;
-            background: white;
-            padding: 0 2px;
-            color: #555;
-            -webkit-transition: 0.2s;
-            transition: 0.2s; */
-            /* NEW */
-        }
+    /* set option items */
+    .RadioSelect .options label {
+      display: block;
+      cursor: pointer;
+    }
 
-        /* set placeholder on start */
-        .RadioSelect input:not(:valid) ~ .placeholder {
-            opacity: 1;
-            left: 0px;
-            padding-left: 6px;
-            top: 0px;
-            font-size: 100%;
-            color: #000;
-        }
+    /* set placeholder */
+    .RadioSelect .placeholder {
+      padding-left: 6px;
+      position: relative;
+      /* position: absolute; */
+      display: inline-block;
+      /* display: block; */
+      background: transparent;
+      top: 0px;
+      z-index: 10;
+      width: 100%;
+      cursor: pointer;
+    }
+    /* set placeholder option if another option is checked */
+    .RadioSelect input:not(:checked) ~ .placeholder {
+      /* opacity: 0; */
+      /* NEW */
+      left: 5px;
+      top: -20px;
+      font-size: 80%;
+      /* background: white;    */
+      padding: 0 2px;
+      padding-bottom: 1.5em;
+/* position: absolute; */
+      color: #555;
+      -webkit-transition: 0.2s;
+      transition: 0.2s;
+      /* NEW */
+    }
 
-        /* set options box */
-        .RadioSelect .options {
-            background: #fff;
-        }
+    /* set placeholder option if another option is checked */
+    .RadioSelect input:checked ~ .placeholder {
+      /* NEW */
+      left: 5px;
+      top: -20px;
+      font-size: 80%;
+      /* background: white; */
+      padding: 0 2px;
+      color: #555;
+      -webkit-transition: 0.2s;
+      transition: 0.2s;
 
-        /* hide options (all items) if placeholder  radio is not checked  */
-        .RadioSelect input:not(:checked) ~ div.options {
-            max-height: 0;
-            width: 100%;
-            overflow: hidden;
-            transition: all 0.5s linear;
-        }
+      /* NEW */
+      /* display: none; */
+      /* width:0; */
+      /* position: relative; */
+      /* position: absolute; */
+    }
 
-        /* roll out options if placeholder  radio is checked  */
-        .RadioSelect input:checked ~ div.options {
-            /* position: absolute; */
-            /* top: 2em; */
+    
+    /* set placeholder on start */
+    .RadioSelect input:not(:valid) ~ .placeholder {
+        opacity: 1;
+        left: 0px;
+        padding-left: 6px;
+        padding-bottom: 0;
+        top: 0px;
+        font-size: 100%;
+        color: #000;
+    }
+    
+    /* set alt Placeholder */
+    .RadioSelect input:not(:valid) ~ .altPlaceholder,
+    .RadioSelect input:not(:checked) ~ .altPlaceholder {
+      display: none;
+    }
+    .RadioSelect input:checked ~ .altPlaceholder {
+      position: absolute;
+      top: 0;
+      padding-left: 6px;
+    }
+    /* set options box */
+    .RadioSelect .options {
+      background: #fff;
+    }
 
-            position: relative;
-            top: 0;
-            isolation: isolate;
+    /* hide options (all items) if placeholder  radio is not checked  */
+    .RadioSelect input:not(:checked) ~ div.options {
+      max-height: 0;
+      width: 100%;
+      overflow: hidden;
+      transition: all 0.5s linear;
+    }
 
-            width: 100%;
-            z-index: 55;
-            max-height: 300px;
-            overflow-y: scroll;
-            overflow-x: hidden;
-            scrollbar-width: thin;
-            border-top: 1px solid #555;
-            transition: all 0.5s linear;
-        }
+    /* roll out options if placeholder  radio is checked  */
+    .RadioSelect input:checked ~ div.options {
+      /* position: absolute; */
+      /* top: 2em; */
 
-        .options::-webkit-scrollbar {
-            height: 0px;
-            width: 5px;
-            background: #fff;
-        }
+      position: relative;
+      top: 0;
+      isolation: isolate;
 
-        .options::-webkit-scrollbar-thumb {
-            background: #ccc;
-            /* -webkit-box-shadow: 0px 1px 2px #555; */
-        }
+      width: 100%;
+      z-index: 55;
+      max-height: 300px;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      scrollbar-width: thin;
+      border-top: 1px solid #555;
+      transition: all 0.5s linear;
+    }
 
-        .options::-webkit-scrollbar-corner {
-            background: #fff;
-        }
+    .options::-webkit-scrollbar {
+      height: 0px;
+      width: 5px;
+      background: #fff;
+    }
 
-        /* .RadioSelect input:checked ~ div.options:after {
+    .options::-webkit-scrollbar-thumb {
+      background: #ccc;
+      /* -webkit-box-shadow: 0px 1px 2px #555; */
+    }
+
+    .options::-webkit-scrollbar-corner {
+      background: #fff;
+    }
+
+    /* .RadioSelect input:checked ~ div.options:after {
             position: absolute;
             top: -1px;
             z-index: 55;
@@ -273,32 +271,32 @@
             transition: all 0.5s linear;
         } */
 
-        /* set option title */
-        .RadioSelect .options .title {
-            display: block;
-            padding-left: 6px;
-            line-height: 2em;
-            width: 100%;
-            font-size: 1em;
-        }
+    /* set option title */
+    .RadioSelect .options .title {
+      display: block;
+      padding-left: 6px;
+      line-height: 2em;
+      width: 100%;
+      font-size: 1em;
+    }
 
-        /* move checked option item to top  */
-        .RadioSelect .options input:checked ~ span.title {
-            position: absolute;
-            z-index: 3;
-            top: 0;
-            border-bottom: 1px solid #555;
-        }
+    /* move checked option item to top  */
+    .RadioSelect .options input:checked ~ span.title {
+      position: absolute;
+      z-index: 3;
+      top: 0;
+      border-bottom: 1px solid #555;
+    }
 
-        /* hover for option */
-        .RadioSelect .option:hover {
-            background: #ccc;
-        }
-        /* remove background after click */
-        .RadioSelect input:not(:checked) ~ div.options .option:hover {
-            background: transparent;
-        }
-    </style>
+    /* hover for option */
+    .RadioSelect .option:hover {
+      background: #ccc;
+    }
+    /* remove background after click */
+    .RadioSelect input:not(:checked) ~ div.options .option:hover {
+      background: transparent;
+    }
+  </style>
 </html>
 
 <!-- <fieldset>
