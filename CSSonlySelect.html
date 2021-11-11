@@ -35,6 +35,7 @@
                 margin: 1em;
                 background: #fff;
                 width: 40rem;
+                height:5em;
                 border: 1px solid #000;
                 box-shadow: 4px 4px 0 #555;
                 position: relative;
@@ -108,12 +109,13 @@
         .RadioSelect {
             font-family: 'Public Sans', sans-serif;
             position: relative;
+            /* position: absolute; */
             overflow: hidden;
             display: block;
             margin: auto;
             line-height: 2em;
             width: 330px;
-            height: 100%;
+            height: max-content;
             border: 1px solid #000;
             box-shadow: 4px 4px 0 #555;
         }
@@ -124,13 +126,7 @@
         }
         /* hide radio inputs */
         .RadioSelect input[type='radio'] {
-            /* position: absolute; */
-            opacity: 0;
-            height: 0;
-            width: 0;
-            padding: 0;
-            margin: 0;
-            display: none;
+                display: none;
         }
         /* dropdown arrow */
         .RadioSelect .arrow {
@@ -182,6 +178,9 @@
             opacity: 1;
         }
 
+        .RadioSelect .options {
+          background: #fff;
+        }
         /* hide options (all items) if placeholder  radio is not checked  */
         .RadioSelect input:not(:checked) ~ div.options {
             max-height: 0;
@@ -195,8 +194,9 @@
             /* position: absolute; */
             /* top: 2em; */
 
-            /* position: relative; */
-            /* top: 0; */
+            position: relative;
+            top: 0;
+            isolation: isolate;
 
             width: 100%;
             z-index: 55;
