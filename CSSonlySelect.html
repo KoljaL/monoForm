@@ -26,7 +26,6 @@
                 max-width: max-content;
                 padding: 1em;
                 margin: 2em auto;
-                /* border: 5px solid #00000015; */
                 border-radius: 5px;
             }
 
@@ -35,7 +34,7 @@
                 margin: 1em;
                 background: #fff;
                 width: 40rem;
-                height:5em;
+                height: 5em;
                 border: 1px solid #000;
                 box-shadow: 4px 4px 0 #555;
                 position: relative;
@@ -48,56 +47,41 @@
             <form action="" autocomplete="off">
                 <div class="RadioSelect">
                     <input type="radio" name="option" id="openSelect" required="required" />
-                    <label class="placeholder" for="openSelect">Choose</label>
-                    <span class="arrow">&#10095;</span>
+                    <label class="placeholder" for="openSelect">Dinosaurs</label>
+                    <span class="altPlaceholder">choose your favorite</span>
+                    <span class="arrow"></span>
                     <div class="options">
                         <label class="option">
                             <input type="radio" name="option" />
-                            <span class="title">Speedometer</span>
+                            <span class="title">Triceratops</span>
                         </label>
                         <label class="option">
                             <input type="radio" name="option" />
-                            <span class="title">Fire</span>
+                            <span class="title">Brachiosaurus</span>
                         </label>
                         <label class="option">
                             <input type="radio" name="option" />
-                            <span class="title">Handbag</span>
+                            <span class="title">Iguanodon</span>
                         </label>
                         <label class="option">
                             <input type="radio" name="option" />
-                            <span class="title">Cadge</span>
+                            <span class="title">Dryosaurus</span>
                         </label>
                         <label class="option">
                             <input type="radio" name="option" />
-                            <span class="title">Speedometer</span>
+                            <span class="title">Tenontosaurus</span>
                         </label>
                         <label class="option">
                             <input type="radio" name="option" />
-                            <span class="title">Fire</span>
+                            <span class="title">Argentinosaurus</span>
                         </label>
                         <label class="option">
                             <input type="radio" name="option" />
-                            <span class="title">Handbag</span>
+                            <span class="title">Brontosaurus</span>
                         </label>
                         <label class="option">
                             <input type="radio" name="option" />
-                            <span class="title">Cadge</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="option" />
-                            <span class="title">Speedometer</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="option" />
-                            <span class="title">Fire</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="option" />
-                            <span class="title">Handbag</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="option" />
-                            <span class="title">Cadge</span>
+                            <span class="title">Tyrannosaurus</span>
                         </label>
                     </div>
                 </div>
@@ -126,7 +110,7 @@
         }
         /* hide radio inputs */
         .RadioSelect input[type='radio'] {
-                display: none;
+            display: none;
         }
         /* dropdown arrow */
         .RadioSelect .arrow {
@@ -170,17 +154,72 @@
         }
         /* set placeholder option if another option is checked */
         .RadioSelect input:not(:checked) ~ .placeholder {
-            opacity: 0;
+            /* opacity: 0; */
+            /* NEW */
+            left: 5px;
+            top: -10px;
+            font-size: 80%;
+            background: white;
+            padding: 0 2px;
+            color: #555;
+            -webkit-transition: 0.2s;
+            transition: 0.2s;
+            /* NEW */
+        }
+
+        /* set placeholder option if another option is checked */
+        .RadioSelect input:checked ~ .placeholder {
+            /* NEW */
+            left: 5px;
+            top: -10px;
+            font-size: 80%;
+            background: white;
+            padding: 0 2px;
+            color: #555;
+            -webkit-transition: 0.2s;
+            transition: 0.2s;
+            /* NEW */
+            /* display: none; */
+            /* width:0; */
+            /* position: relative; */
+            /* position: absolute; */
+        }
+
+        /* set alt Placeholder */
+        .RadioSelect input:not(:valid) ~ .altPlaceholder,
+        .RadioSelect input:not(:checked) ~ .altPlaceholder {
+            display: none;
+        }
+        .RadioSelect input:checked ~ .altPlaceholder {
+            /* display: inline-block; */
+            /* NEW */
+            /* position: absolute;
+            left: 5px;
+            top: -10px;
+            font-size: 80%;
+            background: white;
+            padding: 0 2px;
+            color: #555;
+            -webkit-transition: 0.2s;
+            transition: 0.2s; */
+            /* NEW */
         }
 
         /* set placeholder on start */
         .RadioSelect input:not(:valid) ~ .placeholder {
             opacity: 1;
+            left: 0px;
+            padding-left: 6px;
+            top: 0px;
+            font-size: 100%;
+            color: #000;
         }
 
+        /* set options box */
         .RadioSelect .options {
-          background: #fff;
+            background: #fff;
         }
+
         /* hide options (all items) if placeholder  radio is not checked  */
         .RadioSelect input:not(:checked) ~ div.options {
             max-height: 0;
