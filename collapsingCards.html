@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=1, initial-scale=1.0" />
+        <title>collapsingCards</title>
+        <style>
+            div.deck-container {
+                position: relative;
+                margin: 2em;
+            }
+
+            div.deck-container li {
+                background-color: #fff;
+                position: absolute;
+                border: 1px solid black;
+                border-radius: 10px;
+                padding: 10em 6em;
+                display: inline-block;
+                -webkit-transition: all 0.5s ease-in-out;
+                -moz-transition: all 0.5s ease-in-out;
+                -o-transition: all 0.5s ease-in-out;
+                -ms-transition: all 0.5s ease-in-out;
+                transition: all 0.5s ease-in-out;
+            }
+
+            div.deck-container li:nth-child(1) {
+                left: 0px;
+                top: 0px;
+            }
+
+            div.deck-container li:nth-child(2) {
+                left: 250px;
+                top: 0px;
+            }
+
+            div.deck-container li:nth-child(3) {
+                left: 500px;
+                top: 0px;
+            }
+
+            div.deck-container li:nth-child(4) {
+                left: 750px;
+                top: 0px;
+            }
+
+            div.deck-container li:nth-child(5) {
+                left: 1000px;
+                top: 0px;
+                cursor: pointer;
+            }
+
+            div.deck-container.collapsed li:nth-child(1) {
+                left: 0;
+                top: 0px;
+            }
+
+            div.deck-container.collapsed li:nth-child(2) {
+                left: 3px;
+                top: 2px;
+            }
+
+            div.deck-container.collapsed li:nth-child(3) {
+                left: 6px;
+                top: 4px;
+            }
+
+            div.deck-container.collapsed li:nth-child(4) {
+                left: 9px;
+                top: 6px;
+            }
+
+            div.deck-container.collapsed li:nth-child(5) {
+                left: 12px;
+                top: 8px;
+            }
+
+            button {
+                position: absolute;
+                top: 50px;
+                left: 50px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="deck-container collapsed">
+            <ul>
+                <li>Card 1</li>
+                <li>Card 2</li>
+                <li>Card 3</li>
+                <li>Card 4</li>
+                <li onclick="document.querySelector('div.deck-container').classList.toggle('collapsed');" )>Card 5</li>
+            </ul>
+        </div>
+    </body>
+</html>
