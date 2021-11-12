@@ -86,6 +86,7 @@
 
             .floatLabel div {
                 display: block;
+                width: 100%;
                 position: relative;
                 margin-bottom: 1.5em;
                 font-family: 'Public Sans', sans-serif;
@@ -210,30 +211,94 @@
                     //
                     // TEXT INPUT
                     if ('text' === d.type) {
+                        form.appendChild(createInputText(d));
+                    }
+
+                    //
+                    // TEXTAREA
+                    if ('textarea' === d.type) {
+                        form.appendChild(createTextarea(d));
+                    }
+
+                    //
+                    // INPUTGROUP
+                    if ('inputGroup' === d.type) {
                         //
                         // SOURROUNDING DIV
-                        let div = document.createElement('div');
-                        div.setAttribute('class', 'InputElement');
+                        let divGroup = document.createElement('div');
+                        divGroup.setAttribute('class', 'inputGroup');
 
-                        //
-                        // INPUT FIELD
-                        let input = document.createElement('input');
-                        input.setAttribute('type', d.type);
-                        input.setAttribute('name', d.name);
-                        input.setAttribute('placeholder', d.placeholder);
-                        input.setAttribute('value', d.placeholder);
-
-                        //
-                        // LABEL
-                        let label = document.createElement('label');
-                        label.textContent = d.titel;
-
-                        // CONCAT EVERYTHING
-                        div.appendChild(label);
-                        div.appendChild(input);
-                        form.appendChild(div);
+                        d.items.forEach((i) => {
+                            if ('text' === i.type) {
+                                divGroup.appendChild(createInputText(i));
+                            }
+                        });
+                        form.appendChild(divGroup);
                     }
                 });
+
+
+                //
+                // INPUT TEXT
+                //
+                function createInputText(d) {
+                    //
+                    // SOURROUNDING DIV
+                    let div = document.createElement('div');
+                    div.setAttribute('class', 'InputElement');
+
+                    //
+                    // INPUT FIELD
+                    let input = document.createElement('input');
+                    input.setAttribute('type', d.type);
+                    input.setAttribute('name', d.name);
+                    input.setAttribute('placeholder', d.placeholder);
+                    input.setAttribute('value', d.placeholder);
+
+                    //
+                    // LABEL
+                    let label = document.createElement('label');
+                    label.textContent = d.titel;
+
+                    // CONCAT EVERYTHING
+                    div.appendChild(label);
+                    div.appendChild(input);
+                    return div;
+                }
+
+
+                //
+                // TEXTAREA
+                //
+                function createTextarea(d) {
+                    //
+                    // SOURROUNDING DIV
+                    let div = document.createElement('div');
+                    div.setAttribute('class', 'TextareaElement');
+
+                    //
+                    // INPUT FIELD
+                    let input = document.createElement('textarea');
+                    input.setAttribute('type', d.type);
+                    input.setAttribute('name', d.name);
+                    input.setAttribute('placeholder', d.placeholder);
+                    input.setAttribute('value', d.placeholder);
+
+                    //
+                    // LABEL
+                    let label = document.createElement('label');
+                    label.textContent = d.titel;
+                    // label.setAttribute('class', 'floated');
+
+                    
+                    //
+                    // CONCAT EVERYTHING
+                    div.appendChild(label);
+                    div.appendChild(input);
+                    return div;
+                }
+
+            
 
                 //
                 // SUBMIT BUTTON
@@ -260,8 +325,9 @@
                 document.getElementById(meta.ID).appendChild(fieldset);
 
                 //
-                // EVENTS FOR ALL INPUT TEXT TYPES
-                let inputText = document.querySelectorAll("input[type='text']");
+                // EVENTS FOR ALL INPUT TEXT && TEXTAREAS
+                let inputText = document.querySelectorAll("input[type='text'], textarea");
+
                 inputText.forEach(function (elem) {
                     // IF FIELD HAS A PRESETTED VALUE
                     if (elem.value) {
@@ -392,7 +458,7 @@
                     {
                         type: 'text',
                         name: 'firstname',
-                        titel: 'yirstname',
+                        titel: 'Firstname',
                         placeholder: 'your Firstname please',
                     },
                     {
@@ -400,22 +466,27 @@
                         items: [
                             {
                                 type: 'text',
-                                name: 'firstname',
-                                titel: 'yirstname',
-                                placeholder: 'your Firstname please',
+                                name: 'inputGroup1',
+                                titel: 'inputGroup1',
+                                placeholder: 'inputGroup1',
                             },
                             {
                                 type: 'text',
-                                name: 'firstname',
-                                titel: 'yirstname',
-                                placeholder: 'your Firstname please',
+                                name: 'inputGroup2',
+                                titel: 'inputGroup2',
+                                placeholder: 'inputGroup2',
                             },
                         ],
                     },
                     {
+                        type: 'textarea',
+                        name: 'comment',
+                        titel: 'Comment',
+                        placeholder: 'No newsletter please...',
+                    },
+                    {
                         type: 'text',
                         name: 'lastname',
-                        // titel: 'Lour Lastname please',
                         titel: 'Lastname',
                         placeholder: 'Lour Lastname please',
                     },
