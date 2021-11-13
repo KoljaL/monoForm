@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300&display=swap');
+            * {
+                box-sizing: border-box;
+            }
+            body {
+                position: relative;
+                background: #eee;
+                margin: 2rem auto;
+                max-width: max-content;
+                padding: 1em;
+                margin: 2em auto;
+                font-family: 'Public Sans', sans-serif;
+
+            }
+            fieldset.floatLabel {
+                padding: 1.5rem;
+                margin: 1em;
+                background: #fff;
+                width: 30rem;
+                border: 1px solid #000;
+                box-shadow: 4px 4px 0 #555;
+            }
+            .floatLabel legend {
+                position: relative;
+                top: -0.25em;
+                font-family: 'Public Sans', sans-serif;
+                font-size: 1.5em;
+            }
+        </style>
+    </head>
+    <body>
+        <fieldset class="floatLabel">
+            <div id="SelectPreset">
+                <input class="DropDownDataList" name="Presets" placeholder="Select Preset" />
+                <!-- <input autocomplete="off" class=DropDownDataList role="combobox" list="" id="Preset" name="Presets" placeholder="Select Preset"> -->
+                <label>DropDown</label>
+                <datalist id="Presets" class="DDDL_small" role="listbox">
+                    <option value="start">start</option>
+                    <option value="create new repo">create new repo</option>
+                    <option value="commit and push">commit and push</option>
+                    <option value="info and stats">info and stats</option>
+                    <option value="pull">pull</option>
+                    <option value="all">all</option>
+                </datalist>
+            </div>
+        </fieldset>
+
+        <script>
+            function DDDL() {
+                // DATALIST
+                // https: //dev.to/siddev/customise-datalist-45p0
+                const DropDownDataLists = document.querySelectorAll('input.DropDownDataList');
+
+                // console.log(DropDownDataLists);
+                for (let i = 0; i < DropDownDataLists.length; i++) {
+                    DropDownDataLists[i].addEventListener('click', function () {
+                        var dddlInput = this;
+                        var dddlInputName = dddlInput.name;
+                        var dddlDatalist = document.getElementById(dddlInputName);
+
+                        dddlDatalist.style.display = 'block';
+                        // make option.value to input.value & hide option list
+                        for (let option of dddlDatalist.options) {
+                            option.onclick = function () {
+                                // console.log(dddlInput);
+                                dddlInput.value = option.value;
+                                dddlDatalist.style.display = 'none';
+                                // call the first command
+                                if ('RepoURL' == DropDownDataLists[i].id) {
+                                    sendCommands('start');
+                                }
+                            };
+                        }
+
+                        // hide datalist when mouse is leaving the list
+                        dddlDatalist.addEventListener('mouseleave', (e) => {
+                            dddlDatalist.style.display = 'none';
+                        });
+
+                        dddlInput.oninput = function () {
+                            currentFocus = -1;
+                            var text = dddlInput.value.toUpperCase();
+                            for (let option of dddlDatalist.options) {
+                                if (option.value.toUpperCase().indexOf(text) > -1) {
+                                    option.style.display = 'block';
+                                } else {
+                                    option.style.display = 'none';
+                                }
+                            }
+                        };
+                        var currentFocus = -1;
+                        dddlInput.onkeydown = function (e) {
+                            if (e.keyCode == 40) {
+                                currentFocus++;
+                                addActive(dddlDatalist.options);
+                            } else if (e.keyCode == 38) {
+                                currentFocus--;
+                                addActive(dddlDatalist.options);
+                            } else if (e.keyCode == 13) {
+                                e.preventDefault();
+                                if (currentFocus > -1) {
+                                    /*and simulate a click on the "active" item:*/
+                                    if (dddlDatalist.options) dddlDatalist.options[currentFocus].click();
+                                }
+                            }
+                        };
+
+                        function addActive(x) {
+                            if (!x) return false;
+                            removeActive(x);
+                            if (currentFocus >= x.length) currentFocus = 0;
+                            if (currentFocus < 0) currentFocus = x.length - 1;
+                            x[currentFocus].classList.add('active');
+                        }
+
+                        function removeActive(x) {
+                            for (var i = 0; i < x.length; i++) {
+                                x[i].classList.remove('active');
+                            }
+                        }
+                    }); // addEventListener("click")
+                } // for DropDownDataLists
+                // DATALIST
+            }
+            DDDL();
+        </script>
+    </body>
+</html>

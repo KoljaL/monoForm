@@ -177,6 +177,58 @@
                 -webkit-transition: 0.1s;
                 transition: 0.1s;
             }
+
+            .floatLabel .InputElement ul{
+                position: absolute;
+                max-height: 0px;
+                overflow: hidden;
+                background: #fff;
+                width: 100%;
+                list-style: none;
+                padding:0;
+                margin:0;
+                box-shadow: 2px 2px 0 #555;
+                -webkit-transition: 0.3s;
+                transition: 0.3s;
+            }
+            .floatLabel .InputElement ul.dropped{
+                max-height: 200px;
+                left:2px;
+                top: calc( 2em - 1px);
+                overflow-y: scroll;
+                overflow-x: hidden;
+                scrollbar-width: thin;
+                outline: #000 solid 1px;
+                -webkit-transition: 0.3s;
+                transition: 0.3s;
+            }
+
+
+            .floatLabel .InputElement ul.dropped::-webkit-scrollbar {
+            height: 0px;
+            width: 5px;
+            background: #fff;
+            }
+
+            .floatLabel .InputElement ul.dropped::-webkit-scrollbar-thumb {
+            background: #ccc;
+            /* -webkit-box-shadow: 0px 1px 2px #555; */
+            }
+
+            .floatLabel .InputElement ul.dropped::-webkit-scrollbar-corner {
+            background: #fff;
+            }
+
+
+            .floatLabel .InputElement li{
+                line-height: 2em;
+                padding: 0em 0.5em;
+
+            }
+            .floatLabel .InputElement li:hover {
+                background: #ddd;
+                cursor: pointer;
+            }
         </style>
     </head>
     <body class="center">
@@ -184,21 +236,6 @@
         <div id="FORMVALUES" style="opacity: 0"></div>
 
 
-<fieldset class=floatLabel>
-    <div id=SelectPreset>
-    <input autocomplete="off" class=DropDownDataList role="combobox" list="" id="Preset" name="Presets" placeholder="Select Preset">
-    <label>DropDown</label>
-    <datalist id="Presets" class="DDDL_small" role="listbox">
-        <option value='start'>start</option>
-        <option value='create new repo'>create new repo</option>
-        <option value='commit and push'>commit and push</option>
-        <option value='info and stats'>info and stats</option>
-        <option value='pull'>pull</option>
-        <option value='all'>all</option>
-    </datalist>
-</div>
-</fieldset>
- 
 
     </div>
         <script id="CREATEFORM">
@@ -235,6 +272,12 @@
                     }
 
                     //
+                    // SELECT
+                    if ('select' === d.type) {
+                        form.appendChild(createSelectList(d));
+                    }
+
+                    //
                     // INPUTGROUP
                     if ('inputGroup' === d.type) {
                         //
@@ -250,6 +293,49 @@
                         form.appendChild(divGroup);
                     }
                 });
+
+                //
+                // INPUT TEXT
+                //
+                function createSelectList(d) {
+                    //
+                    // SOURROUNDING DIV
+                    let div = document.createElement('div');
+                    div.setAttribute('class', 'InputElement');
+
+                    //
+                    // INPUT FIELD
+                    let input = document.createElement('input');
+                    input.setAttribute('type', d.type);
+                    input.setAttribute('name', d.name);
+                    input.setAttribute('placeholder', d.placeholder);
+                    // input.setAttribute('value', d.placeholder);
+
+                    //
+                    // LABEL
+                    let label = document.createElement('label');
+                    label.textContent = d.titel;
+
+
+
+                    // LIST
+                    let ul = document.createElement('ul');
+                    d.items.forEach((i) => {
+                            // console.log(i)
+                            let li = document.createElement('li');
+                            li.textContent = i.name;
+                            li.setAttribute('data-value', i.value);
+                            ul.appendChild(li);
+                        });
+
+
+                    // CONCAT EVERYTHING
+                    div.appendChild(label);
+                    div.appendChild(input);
+                    div.appendChild(ul);
+                    return div;
+                }
+
 
                 //
                 // INPUT TEXT
@@ -335,33 +421,65 @@
 
                 //
                 // EVENTS FOR ALL INPUT TEXT && TEXTAREAS
-                let inputText = document.querySelectorAll("input[type='text'], textarea");
+                let inputText = document.querySelectorAll("input[type='text'],input[type='select'], textarea");
+                // console.log(inputText)
 
-                inputText.forEach(function (elem) {
+                inputText.forEach(function (el) {
+                // console.log(el)
+                    //
                     // IF FIELD HAS A PRESETTED VALUE
-                    if (elem.value) {
+                    if (el.value) {
                         // AD CLASS TO LABLE TO LIFT IT UP
-                        elem.previousSibling.setAttribute('class', 'floated');
+                        el.previousSibling.setAttribute('class', 'floated');
                         // ADD CLASS TO SHOW PLACEHOLDER
-                        elem.setAttribute('class', 'visible');
+                        el.setAttribute('class', 'visible');
                     }
 
                     // IF FIELD IS IN FOCUS
-                    elem.addEventListener('focus', function () {
+                    el.addEventListener('focus', function () {
                         // AD CLASS TO LABLE TO LIFT IT UP
-                        elem.previousSibling.setAttribute('class', 'floated');
+                        el.previousSibling.setAttribute('class', 'floated');
                         // ADD CLASS TO SHOW PLACEHOLDER
-                        elem.setAttribute('class', 'visible');
+                        el.setAttribute('class', 'visible');
+
+                        //
+                        // DROPDOWN SELECT LIST
+                        if ('select' === el.attributes.type.nodeValue) {
+                            // DROPP DOWN LIST
+                            el.nextSibling.setAttribute('class', 'dropped');
+                            // MAKE LIST ELEMENTS CLICKABLE
+                            let ListItems = el.nextSibling.querySelectorAll('li');
+                            ListItems.forEach(function (li) {
+                                li.addEventListener('click', function () {
+                                    // console.log(li.dataset.value)
+                                    // SET LI DATAVALUE AS INPUT VALUE
+                                    el.value = li.dataset.value;
+                                });
+                            });
+                        }
+
+                        
                     });
+
+                    //
                     // IF FIELD IS NOT IN FOCUS
-                    elem.addEventListener('blur', function () {
-                        if (!elem.value) {
+                    el.addEventListener('blur', function () {
+                        if (!el.value) {
                             // REMOVE CLASS FROM LABLE
-                            elem.previousSibling.removeAttribute('class', 'floated');
+                            el.previousSibling.removeAttribute('class', 'floated');
                             // REMOVE CLASS TO HIDE PLACEHOLDER & SCHOW LABLE AGAIN
-                            elem.removeAttribute('class', 'visible');
+                            el.removeAttribute('class', 'visible');
+                        } 
+                        // DROPDOWN SELECT LIST
+                        if ('select' === el.attributes.type.nodeValue) {
+                            el.nextSibling.removeAttribute('class', 'dropped');
                         }
                     });
+
+                    // console.log(el.attributes.type.nodeValue)
+
+              
+
                 });
 
                 //
@@ -376,85 +494,6 @@
             } // createForm
         </script>
 
-        <script>
-            function DDDL() {
-                // DATALIST
-                // https: //dev.to/siddev/customise-datalist-45p0
-                const DropDownDataLists = document.querySelectorAll('input.DropDownDataList');
-
-                // console.log(DropDownDataLists);
-                for (let i = 0; i < DropDownDataLists.length; i++) {
-                    DropDownDataLists[i].addEventListener('click', function () {
-                        var dddlInput = this;
-                        var dddlInputName = dddlInput.name;
-                        var dddlDatalist = document.getElementById(dddlInputName);
-
-                        dddlDatalist.style.display = 'block';
-                        // make option.value to input.value & hide option list
-                        for (let option of dddlDatalist.options) {
-                            option.onclick = function () {
-                                // console.log(dddlInput);
-                                dddlInput.value = option.value;
-                                dddlDatalist.style.display = 'none';
-                                // call the first command
-                                if ('RepoURL' == DropDownDataLists[i].id) {
-                                    sendCommands('start');
-                                }
-                            };
-                        }
-
-                        // hide datalist when mouse is leaving the list
-                        dddlDatalist.addEventListener('mouseleave', (e) => {
-                            dddlDatalist.style.display = 'none';
-                        });
-
-                        dddlInput.oninput = function () {
-                            currentFocus = -1;
-                            var text = dddlInput.value.toUpperCase();
-                            for (let option of dddlDatalist.options) {
-                                if (option.value.toUpperCase().indexOf(text) > -1) {
-                                    option.style.display = 'block';
-                                } else {
-                                    option.style.display = 'none';
-                                }
-                            }
-                        };
-                        var currentFocus = -1;
-                        dddlInput.onkeydown = function (e) {
-                            if (e.keyCode == 40) {
-                                currentFocus++;
-                                addActive(dddlDatalist.options);
-                            } else if (e.keyCode == 38) {
-                                currentFocus--;
-                                addActive(dddlDatalist.options);
-                            } else if (e.keyCode == 13) {
-                                e.preventDefault();
-                                if (currentFocus > -1) {
-                                    /*and simulate a click on the "active" item:*/
-                                    if (dddlDatalist.options) dddlDatalist.options[currentFocus].click();
-                                }
-                            }
-                        };
-
-                        function addActive(x) {
-                            if (!x) return false;
-                            removeActive(x);
-                            if (currentFocus >= x.length) currentFocus = 0;
-                            if (currentFocus < 0) currentFocus = x.length - 1;
-                            x[currentFocus].classList.add('active');
-                        }
-
-                        function removeActive(x) {
-                            for (var i = 0; i < x.length; i++) {
-                                x[i].classList.remove('active');
-                            }
-                        }
-                    }); // addEventListener("click")
-                } // for DropDownDataLists
-                // DATALIST
-            }
-            DDDL();
-        </script>
 
         <script id="FORMSUBMIT">
             window.addEventListener('load', function () {
@@ -579,9 +618,45 @@
                         titel: 'Lastname',
                         placeholder: 'Lour Lastname please',
                     },
+                    {
+                        type: 'select',
+                        name: 'dinosaurs',
+                        titel: 'Dinosaurs',
+                        placeholder: 'choose your favorite',
+                        items:[
+                            {
+                                name: 'Brachiosaurus',
+                                value: 'Brachiosaurus'
+                            },
+                            {
+                                name: 'Iguanodon',
+                                value: 'Iguanodon'
+                            },
+                            {
+                                name: 'Dryosaurus',
+                                value: 'Dryosaurus'
+                            },
+                            {
+                                name: 'Tenontosaurus',
+                                value: 'Tenontosaurus'
+                            },
+                            {
+                                name: 'Argentinosaurus',
+                                value: 'Argentinosaurus'
+                            },
+                            {
+                                name: 'Brontosaurus',
+                                value: 'Brontosaurus'
+                            },
+                            {
+                                name: 'Tyrannosaurus',
+                                value: 'Tyrannosaurus'
+                            }
+                        ]
+                    },
                 ],
             };
-            console.log(data);
+            // console.log(data);
             createForm(data);
         </script>
     </body>
