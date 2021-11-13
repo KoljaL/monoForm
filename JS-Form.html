@@ -88,7 +88,7 @@
                 font-family: 'Public Sans', sans-serif;
             }
 
-            .floatLabel label {
+            .floatLabel label:not(li label) {
                 position: absolute;
                 left: 0;
                 top: 0.04em;
@@ -144,7 +144,7 @@
             }
 
             .floatLabel textarea:placeholder-shown {
-                height: 2.5em;
+                height: 1.8em;
                 -webkit-transition: 0.2s;
                 transition: 0.2s;
             }
@@ -178,20 +178,21 @@
                 transition: 0.1s;
             }
 
-            .floatLabel .InputElement ul{
+            .floatLabel .CkbList ul{
                 position: absolute;
-                max-height: 0px;
+                /* max-height: 0px; */
                 overflow: hidden;
                 background: #fff;
                 width: 100%;
                 list-style: none;
                 padding:0;
                 margin:0;
-                box-shadow: 2px 2px 0 #555;
+                /* outline: #000 solid 1px; */
+                box-shadow: 2px 2px 0 #555, -1px -1px 0px 0px #000;
                 -webkit-transition: 0.3s;
                 transition: 0.3s;
             }
-            .floatLabel .InputElement ul.dropped{
+            .floatLabel .CkbList ul.dropped{
                 max-height: 200px;
                 left:2px;
                 top: calc( 2em - 1px);
@@ -204,31 +205,39 @@
             }
 
 
-            .floatLabel .InputElement ul.dropped::-webkit-scrollbar {
+            .floatLabel .CkbList ul.dropped::-webkit-scrollbar {
             height: 0px;
             width: 5px;
             background: #fff;
             }
 
-            .floatLabel .InputElement ul.dropped::-webkit-scrollbar-thumb {
+            .floatLabel .CkbList ul.dropped::-webkit-scrollbar-thumb {
             background: #ccc;
             /* -webkit-box-shadow: 0px 1px 2px #555; */
             }
 
-            .floatLabel .InputElement ul.dropped::-webkit-scrollbar-corner {
+            .floatLabel .CkbList ul.dropped::-webkit-scrollbar-corner {
             background: #fff;
             }
-
-
-            .floatLabel .InputElement li{
-                line-height: 2em;
-                padding: 0em 0.5em;
-
-            }
-            .floatLabel .InputElement li:hover {
+            .floatLabel .CkbList li input:checked ~ label{
                 background: #ddd;
+            }
+            .floatLabel .CkbList li input:checked ~ label:hover,
+            .floatLabel .CkbList li label:hover {
+                background: #eee;
                 cursor: pointer;
             }
+
+            .floatLabel .CkbList li  label{
+                display: inline-block;
+                padding: .25em 0.5em;
+                line-height: 1em;
+                font-size: .85em;
+                width: 100%;
+            }
+
+
+      
         </style>
     </head>
     <body class="center">
@@ -301,7 +310,7 @@
                     //
                     // SOURROUNDING DIV
                     let div = document.createElement('div');
-                    div.setAttribute('class', 'InputElement');
+                    div.setAttribute('class', 'CkbList');
 
                     //
                     // INPUT FIELD
@@ -317,14 +326,29 @@
                     label.textContent = d.titel;
 
 
-
+                    //
                     // LIST
                     let ul = document.createElement('ul');
                     d.items.forEach((i) => {
                             // console.log(i)
                             let li = document.createElement('li');
-                            li.textContent = i.name;
+                            // li.textContent = i.name;
                             li.setAttribute('data-value', i.value);
+
+                            let ItemLabel = document.createElement('label');
+                            ItemLabel.textContent = i.value;
+                            ItemLabel.setAttribute('class', 'CkbListItem');
+                            ItemLabel.setAttribute('for', i.value);
+
+                            let ckbox = document.createElement('input');
+                            ckbox.setAttribute('type', 'checkbox');
+                            ckbox.setAttribute('name', i.value);
+                            ckbox.setAttribute('id', i.value);
+                            ckbox.setAttribute('class', 'CkbListItem');
+                            ckbox.setAttribute('style', 'display:none');
+                            
+                            li.appendChild(ckbox);
+                            li.appendChild(ItemLabel);
                             ul.appendChild(li);
                         });
 
@@ -442,6 +466,8 @@
                         // ADD CLASS TO SHOW PLACEHOLDER
                         el.setAttribute('class', 'visible');
 
+
+
                         //
                         // DROPDOWN SELECT LIST
                         if ('select' === el.attributes.type.nodeValue) {
@@ -458,8 +484,11 @@
                             });
                         }
 
+
+
+
                         
-                    });
+                    }); // addEventListener(focus)
 
                     //
                     // IF FIELD IS NOT IN FOCUS
@@ -521,13 +550,80 @@
                     FORMVALUES.style.opacity = 1;
                 }
 
+
+
+
+
+                //
+                // GET OUTSIDECLICK OF CKBLIIST UL
+                //
+                const CKB = document.querySelectorAll('.CkbList');
+                // FOREACH CKBLIIST
+                CKB.forEach(function (el) {
+                const CKBLIST = el.querySelectorAll('ul');
+                    console.log(CKBLIST)
+
+
+                        // console.log(ul) 
+                        document.addEventListener('click', (evt) => {
+                            let InputItems = ""
+                            if('CkbListItem' === evt.target.getAttribute("class")){
+                                // console.log(evt.target.getAttribute("class")) 
+                                // console.log(ul.children) 
+                                // console.log(ul.childNodes) 
+                                CKBLIST.childNodes.forEach(function (li) {
+                                    // console.log(li.firstChild.checked)
+                                    if(li.firstChild.checked){
+                                        InputItems += li.firstChild.name + ', '
+                                    }
+                                });
+                            }
+                            if(InputItems){
+                                console.log(InputItems)
+                             }                  
+                        });      
+                });
+
+
+
+
+
+
+                // const CKBLIST = document.querySelectorAll('.CkbList ul');
+                //     console.log(CKBLIST)
+                // // FOREACH CKBLIIST
+                // CKBLIST.forEach(function (ul) {
+                //         // console.log(ul) 
+                //         document.addEventListener('click', (evt) => {
+                //             let InputItems = ""
+                //             if('CkbListItem' === evt.target.getAttribute("class")){
+                //                 // console.log(evt.target.getAttribute("class")) 
+                //                 // console.log(ul.children) 
+                //                 // console.log(ul.childNodes) 
+                //                 ul.childNodes.forEach(function (li) {
+                //                     // console.log(li.firstChild.checked)
+                //                     if(li.firstChild.checked){
+                //                         InputItems += li.firstChild.name + ', '
+                //                     }
+                //                 });
+                //             }
+                //             if(InputItems){
+                //                 console.log(InputItems)
+                //              }                  
+                //         });      
+                // });
+
+
+
                 //
                 // CLICKHANDLER for everything?
                 document.addEventListener('click', (evt) => {
-                    const LEGEND = document.querySelector('#FORMVALUES legend');
-                    const FORMVALUES = document.querySelector('#FORMVALUES');
+                    const LEGEND = document.querySelector('#FORMVALUES legend'); // DEV
+                    const FORMVALUES = document.querySelector('#FORMVALUES'); // DEV
+
                     let targetElement = evt.target; // clicked element
                     do {
+                        // REMOVE FORM VALUES (DEV)
                         if (targetElement == LEGEND) {
                             FORMVALUES.style.opacity = 0;
                             return;
@@ -572,6 +668,8 @@
                     showData();
                 });
             });
+ 
+            
         </script>
 
         <script id="JSONDATA">
