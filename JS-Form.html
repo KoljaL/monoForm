@@ -170,6 +170,7 @@
             }
             .floatLabel select:focus,
             .floatLabel input:not([type='submit']):focus,
+            .floatLabel input.focus1,
             .floatLabel textarea:focus,
             .floatLabelButton.submitButtonActive {
                 box-shadow: 2px 2px 0 #777 !important;
@@ -180,7 +181,7 @@
 
             .floatLabel .CkbList ul{
                 position: absolute;
-                /* max-height: 0px; */
+                max-height: 0px;
                 overflow: hidden;
                 background: #fff;
                 width: 100%;
@@ -465,6 +466,10 @@
                         el.previousSibling.setAttribute('class', 'floated');
                         // ADD CLASS TO SHOW PLACEHOLDER
                         el.setAttribute('class', 'visible');
+                        // el.setAttribute('class','focus1')
+                        // el.classList.add("visible","focus1");
+                        // el.classList.add("focus1");
+
 
 
 
@@ -474,14 +479,14 @@
                             // DROPP DOWN LIST
                             el.nextSibling.setAttribute('class', 'dropped');
                             // MAKE LIST ELEMENTS CLICKABLE
-                            let ListItems = el.nextSibling.querySelectorAll('li');
-                            ListItems.forEach(function (li) {
-                                li.addEventListener('click', function () {
-                                    // console.log(li.dataset.value)
-                                    // SET LI DATAVALUE AS INPUT VALUE
-                                    el.value = li.dataset.value;
-                                });
-                            });
+                            // let ListItems = el.nextSibling.querySelectorAll('li');
+                            // ListItems.forEach(function (li) {
+                            //     li.addEventListener('click', function () {
+                            //         // console.log(li.dataset.value)
+                            //         // SET LI DATAVALUE AS INPUT VALUE
+                            //         // el.value = li.dataset.value;
+                            //     });
+                            // });
                         }
 
 
@@ -494,14 +499,17 @@
                     // IF FIELD IS NOT IN FOCUS
                     el.addEventListener('blur', function () {
                         if (!el.value) {
+                            console.log("blur")
                             // REMOVE CLASS FROM LABLE
                             el.previousSibling.removeAttribute('class', 'floated');
                             // REMOVE CLASS TO HIDE PLACEHOLDER & SCHOW LABLE AGAIN
-                            el.removeAttribute('class', 'visible');
+                            // el.removeAttribute('class', 'visible');
+                        // el.classList.remove("visible");
+
                         } 
                         // DROPDOWN SELECT LIST
                         if ('select' === el.attributes.type.nodeValue) {
-                            el.nextSibling.removeAttribute('class', 'dropped');
+                            // el.nextSibling.removeAttribute('class', 'dropped');
                         }
                     });
 
@@ -512,7 +520,7 @@
                 });
 
                 //
-                // SET BUTTON STATE
+                // SET SUBMIT BUTTON STATE
                 let submitButton = document.getElementById('submitButton');
                 submitButton.addEventListener('mousedown', function () {
                     submitButton.classList.add('submitButtonActive');
@@ -533,7 +541,11 @@
                     FormValues = {};
                     for (let element of FormElements) {
                         if (element.value && element.name) {
-                            // console.log(element.value);
+                            // remove CkbList checkboxes 
+                            if('CkbListItem' === element.getAttribute('class')){
+                                continue;
+                            }
+                            // console.log(element.getAttribute('class'));
                             FormValues[element.name] = element.value;
                         }
                     }
@@ -542,7 +554,7 @@
                     values = values.replaceAll('{', '');
                     values = values.replaceAll('}', '');
                     values = values.replaceAll('"', '');
-                    values = values.replaceAll(',', '');
+                    // values = values.replaceAll(',', '');
                     values = values.replaceAll('    ', '');
                     // values = '<h3>' + data.FormMeta.name + '-Values</h3>' + values;
                     let FORMVALUES = document.getElementById('FORMVALUES');
@@ -556,62 +568,43 @@
 
                 //
                 // GET OUTSIDECLICK OF CKBLIIST UL
-                //
-                const CKB = document.querySelectorAll('.CkbList');
+                // 
+                const CKBLIST = document.querySelectorAll('.CkbList ul');
+                // console.log(CKBLIST)
                 // FOREACH CKBLIIST
-                CKB.forEach(function (el) {
-                const CKBLIST = el.querySelectorAll('ul');
-                    console.log(CKBLIST)
-
-
+                CKBLIST.forEach(function (ul) {
                         // console.log(ul) 
                         document.addEventListener('click', (evt) => {
                             let InputItems = ""
                             if('CkbListItem' === evt.target.getAttribute("class")){
+                                // ul.previousSibling.setAttribute('class','focus')
                                 // console.log(evt.target.getAttribute("class")) 
                                 // console.log(ul.children) 
                                 // console.log(ul.childNodes) 
-                                CKBLIST.childNodes.forEach(function (li) {
+                                ul.childNodes.forEach(function (li) {
+                                    // console.log(li.firstChild.id)
                                     // console.log(li.firstChild.checked)
                                     if(li.firstChild.checked){
                                         InputItems += li.firstChild.name + ', '
                                     }
                                 });
+                                if(InputItems){
+                                    // console.log(InputItems)
+                                    // console.log(ul.previousSibling)
+                                    ul.previousSibling.value = InputItems.replace(/,\s*$/, "");
+                                    ul.previousSibling.classList.add('focus1');
+                                    ul.previousSibling.previousSibling.classList.add('floated');
+
+                                }                  
+                            }else if('visible' !== evt.target.getAttribute('class')){
+                                // console.log(evt.target.getAttribute('class'))
+                                ul.removeAttribute('class', 'dropped');
+                                ul.previousSibling.removeAttribute('class','focus1')
+
+
                             }
-                            if(InputItems){
-                                console.log(InputItems)
-                             }                  
                         });      
                 });
-
-
-
-
-
-
-                // const CKBLIST = document.querySelectorAll('.CkbList ul');
-                //     console.log(CKBLIST)
-                // // FOREACH CKBLIIST
-                // CKBLIST.forEach(function (ul) {
-                //         // console.log(ul) 
-                //         document.addEventListener('click', (evt) => {
-                //             let InputItems = ""
-                //             if('CkbListItem' === evt.target.getAttribute("class")){
-                //                 // console.log(evt.target.getAttribute("class")) 
-                //                 // console.log(ul.children) 
-                //                 // console.log(ul.childNodes) 
-                //                 ul.childNodes.forEach(function (li) {
-                //                     // console.log(li.firstChild.checked)
-                //                     if(li.firstChild.checked){
-                //                         InputItems += li.firstChild.name + ', '
-                //                     }
-                //                 });
-                //             }
-                //             if(InputItems){
-                //                 console.log(InputItems)
-                //              }                  
-                //         });      
-                // });
 
 
 
