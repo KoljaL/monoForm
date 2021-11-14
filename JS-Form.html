@@ -81,7 +81,10 @@
             }
 
 
-            .floatLabel  .inputGroup,.floatLabel  .InputElement,.floatLabel  .TextareaElement, .floatLabel .CkbList{
+            .floatLabel  .inputGroup,
+            .floatLabel  .InputElement,
+            .floatLabel  .TextareaElement, 
+            .floatLabel .CkbList{
                 display: block;
                 width: 100%;
                 /* height:1.9em; */
@@ -109,6 +112,7 @@
                 left: 0.5em;
                 padding: 0.1em 0.1em;
                 background: white;
+                color: #555;
                 font-size: 0.8em;
                 z-index: 2;
                 -webkit-transition: 0.2s;
@@ -136,6 +140,7 @@
                 line-height: 1.3em;
                 /* padding: 0.25em 0.5em; */
                 padding: 0.4em 0.5em 0.1em 0.5em;
+                padding: 0.35em 0.5em 0.2em 0.5em;
 
                 border: 0;
                 color: #000;
@@ -341,20 +346,21 @@
                             // console.log(i)
                             let li = document.createElement('li');
                             // li.textContent = i.name;
-                            li.setAttribute('data-value', i.value);
+                            // li.setAttribute('data-value', i.value);
 
                             let ItemLabel = document.createElement('label');
-                            ItemLabel.textContent = i.value;
+                            ItemLabel.textContent = i.name;
                             ItemLabel.setAttribute('class', 'CkbListItem');
                             ItemLabel.setAttribute('for', i.value);
 
                             let ckbox = document.createElement('input');
                             ckbox.setAttribute('type', 'checkbox');
-                            ckbox.setAttribute('name', i.value);
+                            ckbox.setAttribute('name', i.name);
                             ckbox.setAttribute('id', i.value);
                             ckbox.setAttribute('class', 'CkbListItem');
                             ckbox.setAttribute('style', 'display:none');
-                            
+
+                            // CONCAT LISTITEMS
                             li.appendChild(ckbox);
                             li.appendChild(ItemLabel);
                             ul.appendChild(li);
@@ -681,50 +687,45 @@
                     action: '',
                 },
                 FormData: [
-                    {
-                        type: 'text',
-                        name: 'firstname',
-                        titel: 'Firstname',
-                        placeholder: 'your Firstname please',
-                    },
+
                     {
                         type: 'inputGroup',
                         items: [
                             {
                                 type: 'text',
-                                name: 'inputGroup1',
-                                titel: 'inputGroup1',
-                                placeholder: 'inputGroup1',
+                                name: 'firstname',
+                                titel: 'Firstname',
+                                placeholder: 'how are you called',
                             },
                             {
                                 type: 'text',
-                                name: 'inputGroup2',
-                                titel: 'inputGroup2',
-                                placeholder: 'inputGroup2',
+                                name: 'surename',
+                                titel: 'Surename',
+                                placeholder: 'how are you called',
                             },
                         ],
+                    },
+                    {
+                        type: 'text',
+                        name: 'email',
+                        titel: 'E-Mail',
+                        placeholder: 'please give us a way to contact you',
                     },
                     {
                         type: 'textarea',
                         name: 'comment',
                         titel: 'Comment',
                         placeholder: 'No newsletter please...',
-                    },
-                    {
-                        type: 'text',
-                        name: 'lastname',
-                        titel: 'Lastname',
-                        placeholder: 'Lour Lastname please',
-                    },
+                    }, 
                     {
                         type: 'select',
                         name: 'dinosaurs',
                         titel: 'Dinosaurs',
-                        placeholder: 'choose your favorite',
+                        placeholder: 'choose your favorites, yes more than one!',
                         items:[
                             {
-                                name: 'Brachiosaurus',
-                                value: 'Brachiosaurus'
+                                name: 'BrachiosaurusN',
+                                value: 'BrachiosaurusV'
                             },
                             {
                                 name: 'Iguanodon',
