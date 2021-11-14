@@ -75,25 +75,27 @@
             .inputGroup div:not(:last-child) {
                 margin-right: 15px;
             }
-
             .floatLabel {
-                font-size: 18px !important;
+                font-size: 16px !important;
+                font-family: 'Public Sans', sans-serif!important;
             }
 
-            .floatLabel div {
+
+            .floatLabel  .inputGroup,.floatLabel  .InputElement,.floatLabel  .TextareaElement, .floatLabel .CkbList{
                 display: block;
                 width: 100%;
+                /* height:1.9em; */
                 position: relative;
                 margin-bottom: 1.5em;
-                font-family: 'Public Sans', sans-serif;
             }
+      
+           
 
             .floatLabel label:not(li label) {
                 position: absolute;
                 left: 0;
                 top: 0.04em;
-                padding: 0.25em 0.5em;
-
+                padding: 0.3em 0.5em 0.25em 0.5em;
                 pointer-events: none;
                 cursor: text;
                 font-size: 1em;
@@ -132,7 +134,9 @@
             .floatLabel textarea {
                 font-size: 1em;
                 line-height: 1.3em;
-                padding: 0.25em 0.5em;
+                /* padding: 0.25em 0.5em; */
+                padding: 0.4em 0.5em 0.1em 0.5em;
+
                 border: 0;
                 color: #000;
                 background: #fff;
@@ -153,6 +157,8 @@
                 height: 15em;
                 -webkit-transition: 0.3s;
                 transition: 0.3s;
+                /* substract the outlines for the same height as input fields, just for CHROME & co */
+                -webkit-margin-after:  -4px; 
             }
             .floatLabelButton {
                 line-height: 1em !important;
@@ -257,14 +263,15 @@
                 //
                 // make obj handles
                 let data = json.FormData;
-                let meta = json.FormMeta;
+            let meta = json.FormMeta;
 
-                //
-                // create the form
-                let form = document.createElement('form');
-                form.setAttribute('method', meta.method);
+            //
+            // create the form
+            let form = document.createElement('form');
+            form.setAttribute('method', meta.method);
                 form.setAttribute('action', meta.action);
                 form.setAttribute('name', meta.name);
+                form.setAttribute('autocomplete', 'off');
 
                 //
                 // loops for every form item
@@ -377,7 +384,7 @@
                     input.setAttribute('type', d.type);
                     input.setAttribute('name', d.name);
                     input.setAttribute('placeholder', d.placeholder);
-                    input.setAttribute('value', d.placeholder);
+                    // input.setAttribute('value', d.placeholder);
 
                     //
                     // LABEL
@@ -504,7 +511,7 @@
                             el.previousSibling.removeAttribute('class', 'floated');
                             // REMOVE CLASS TO HIDE PLACEHOLDER & SCHOW LABLE AGAIN
                             // el.removeAttribute('class', 'visible');
-                        // el.classList.remove("visible");
+                        el.classList.remove("visible");
 
                         } 
                         // DROPDOWN SELECT LIST
