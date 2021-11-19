@@ -558,57 +558,39 @@
                 //     el.removeAttribute('class', 'inputFocus');
                 // }
 
-                document.addEventListener('click', (evt) => {
-                    // deb(evt.target.getAttribute('class'));
-                });
+                // document.addEventListener('click', (evt) => {
+                // deb(evt.target.getAttribute('class'));
+                // });
             }
-
-            function init(el) {
-                var canvas = document.getElementById(el);
-                canvas.addEventListener(
-                    'mousedown',
-                    function (event) {
-                        deb("oo")
-                        return el;
-
-                        // result is your return value
-                    },
-                    false
-                ); 
-            }
-            deb(init('FORM'))
-
-
 
             function isClickInside(el) {
-                // deb("\n\n")
-                // deb(el)
                 let inside = 'false';
                 document.addEventListener('click', (evt) => {
-                    // deb(evt.target)
-                    // const flyoutEl = document.getElementById('FORM');
                     const flyoutEl = el;
-                    // deb('el');
-                    // deb(el);
                     let targetEl = evt.target;
-                    // deb('targetEl');
                     do {
-                        // deb(targetEl);
                         if (targetEl == flyoutEl) {
                             inside = 'true';
-                            // deb('INSDE FORM');
-                            // deb('2',inside);
-
-                            return;
+                            deb('INSIDE FORM');
+                            return true;
                         }
-                        // Go up the DOM
                         targetEl = targetEl.parentNode;
                     } while (targetEl);
-                    // deb('OUTSDE FORM');
-                    // deb('3',inside);
+                    deb('OUTSDE FORM');
+                    let FORM = document.querySelectorAll('.LabelTop, .LBopen, .inputFocus')
+                    deb(FORM)
+                    FORM.forEach((el) => {
+                        el.removeAttribute('class', 'LabelTop');
+                        el.removeAttribute('class', 'LBopen');
+                        el.removeAttribute('class', 'inputFocus');
+                    })
+                    deb(el)
+                    // el.previousSibling.removeAttribute('class', 'LabelTop');
+                    // el.nextSibling.removeAttribute('class', 'LBopen');
+                    // el.removeAttribute('class', 'inputFocus');
                     return inside;
                 });
-                // deb('4',inside);
+                deb('4', inside);
                 return inside;
             }
 
@@ -738,87 +720,87 @@
         </script>
 
         <script id="FORMSUBMIT">
-            window.addEventListener('load', function () {
-                function showData() {
-                    let FormName = data.FormMeta.name;
-                    let FormElements = document.forms[FormName].elements;
-                    // deb(FormElements);
-                    FormValues = {};
-                    for (let element of FormElements) {
-                        if (element.value && element.name) {
-                            // remove ListBox checkboxGroup
-                            if ('ListBoxItem' === element.getAttribute('class')) {
-                                continue;
-                            }
-                            // deb(element.getAttribute('class'));
-                            FormValues[element.name] = element.value;
-                        }
-                    }
-                    // deb(FormValues)
-                    let values = JSON.stringify(FormValues, undefined, 4);
-                    values = values.replaceAll('{', '');
-                    values = values.replaceAll('}', '');
-                    values = values.replaceAll('"', '');
-                    // values = values.replaceAll(',', '');
-                    values = values.replaceAll('    ', '');
-                    let FORMVALUES = document.getElementById('FORMVALUES');
-                    FORMVALUES.innerHTML = "<fieldset><legend style='font-size: 1.4em'>Form Values</legend><pre>" + values + '</pre></fieldset>';
-                    FORMVALUES.style.opacity = 1;
-                }
+            // window.addEventListener('load', function () {
+            //     function showData() {
+            //         let FormName = data.FormMeta.name;
+            //         let FormElements = document.forms[FormName].elements;
+            //         // deb(FormElements);
+            //         FormValues = {};
+            //         for (let element of FormElements) {
+            //             if (element.value && element.name) {
+            //                 // remove ListBox checkboxGroup
+            //                 if ('ListBoxItem' === element.getAttribute('class')) {
+            //                     continue;
+            //                 }
+            //                 // deb(element.getAttribute('class'));
+            //                 FormValues[element.name] = element.value;
+            //             }
+            //         }
+            //         // deb(FormValues)
+            //         let values = JSON.stringify(FormValues, undefined, 4);
+            //         values = values.replaceAll('{', '');
+            //         values = values.replaceAll('}', '');
+            //         values = values.replaceAll('"', '');
+            //         // values = values.replaceAll(',', '');
+            //         values = values.replaceAll('    ', '');
+            //         let FORMVALUES = document.getElementById('FORMVALUES');
+            //         FORMVALUES.innerHTML = "<fieldset><legend style='font-size: 1.4em'>Form Values</legend><pre>" + values + '</pre></fieldset>';
+            //         FORMVALUES.style.opacity = 1;
+            //     }
 
-                //
-                // CLICKHANDLER for everything?
-                document.addEventListener('click', (evt) => {
-                    const LEGEND = document.querySelector('#FORMVALUES legend'); // DEV
-                    const FORMVALUES = document.querySelector('#FORMVALUES'); // DEV
+            //     //
+            //     // CLICKHANDLER for everything?
+            //     document.addEventListener('click', (evt) => {
+            //         const LEGEND = document.querySelector('#FORMVALUES legend'); // DEV
+            //         const FORMVALUES = document.querySelector('#FORMVALUES'); // DEV
 
-                    let targetElement = evt.target; // clicked element
-                    do {
-                        // REMOVE FORM VALUES (DEV)
-                        if (targetElement == LEGEND) {
-                            FORMVALUES.style.opacity = 0;
-                            return;
-                        }
-                        // deb(targetElement);
-                        targetElement = targetElement.parentNode;
-                    } while (targetElement);
-                    // deb('outside');
-                });
+            //         let targetElement = evt.target; // clicked element
+            //         do {
+            //             // REMOVE FORM VALUES (DEV)
+            //             if (targetElement == LEGEND) {
+            //                 FORMVALUES.style.opacity = 0;
+            //                 return;
+            //             }
+            //             // deb(targetElement);
+            //             targetElement = targetElement.parentNode;
+            //         } while (targetElement);
+            //         // deb('outside');
+            //     });
 
-                //
-                // KEYHANDLER
-                document.onkeydown = function (evt) {
-                    evt = evt || window.event;
-                    const FORMVALUES = document.querySelector('#FORMVALUES');
-                    var isEscape = false;
-                    if ('key' in evt) {
-                        // deb(evt);
-                        if (evt.key === 'Escape' || evt.key === 'Esc') {
-                            FORMVALUES.style.opacity = 0;
-                        }
-                    }
-                };
+            //     //
+            //     // KEYHANDLER
+            //     document.onkeydown = function (evt) {
+            //         evt = evt || window.event;
+            //         const FORMVALUES = document.querySelector('#FORMVALUES');
+            //         var isEscape = false;
+            //         if ('key' in evt) {
+            //             // deb(evt);
+            //             if (evt.key === 'Escape' || evt.key === 'Esc') {
+            //                 FORMVALUES.style.opacity = 0;
+            //             }
+            //         }
+            //     };
 
-                // function sendData() {
-                //     const XHR = new XMLHttpRequest();
-                //     const FD = new FormData(form);
-                //     XHR.addEventListener('load', function (event) {
-                //         deb(event.target.responseText);
-                //     });
-                //     XHR.addEventListener('error', function (event) {
-                //         deb('Oops! Something went wrong.');
-                //     });
-                //     XHR.open('POST', 'api.php');
-                //     deb(form);
-                //     XHR.send(FD);
-                // }
-                const form = document.getElementById('FORM');
-                form.addEventListener('submit', function (event) {
-                    event.preventDefault();
-                    // sendData();
-                    showData();
-                });
-            });
+            //     // function sendData() {
+            //     //     const XHR = new XMLHttpRequest();
+            //     //     const FD = new FormData(form);
+            //     //     XHR.addEventListener('load', function (event) {
+            //     //         deb(event.target.responseText);
+            //     //     });
+            //     //     XHR.addEventListener('error', function (event) {
+            //     //         deb('Oops! Something went wrong.');
+            //     //     });
+            //     //     XHR.open('POST', 'api.php');
+            //     //     deb(form);
+            //     //     XHR.send(FD);
+            //     // }
+            //     const form = document.getElementById('FORM');
+            //     form.addEventListener('submit', function (event) {
+            //         event.preventDefault();
+            //         // sendData();
+            //         showData();
+            //     });
+            // });
         </script>
         <script id="JSONDATA">
             const data = {
