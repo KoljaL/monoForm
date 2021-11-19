@@ -191,7 +191,7 @@
                 -webkit-transition: 0.3s;
                 transition: 0.3s;
             }
-            .floatLabel .ListBox ul.LBopen {
+            .floatLabel .ListBox.isActive ul {
                 max-height: 200px;
                 left: 2px;
                 top: calc(2em + 3px);
@@ -546,11 +546,11 @@
         <script id="EVENTHANDLER">
             function openListBox(el) {
                 // deb(el);
-                el.previousSibling.setAttribute('class', 'LabelTop');
-                el.nextSibling.setAttribute('class', 'LBopen');
-                el.setAttribute('class', 'inputFocus');
-
-                deb(isClickInside(el.parentNode));
+                // el.previousSibling.setAttribute('class', 'LabelTop');
+                // el.nextSibling.setAttribute('class', 'LBopen');
+                // el.setAttribute('class', 'inputFocus');
+                el.parentNode.classList.add('class', 'isActive');
+                // deb(isClickInside(el.parentNode));
                 // if (isClickInside(el.parentNode)) {
                 //     deb('isClickInside');
                 //     el.previousSibling.removeAttribute('class', 'LabelTop');
@@ -563,36 +563,73 @@
                 // });
             }
 
-            function isClickInside(el) {
-                let inside = 'false';
-                document.addEventListener('click', (evt) => {
-                    const flyoutEl = el;
-                    let targetEl = evt.target;
-                    do {
-                        if (targetEl == flyoutEl) {
-                            inside = 'true';
-                            deb('INSIDE FORM');
-                            return true;
-                        }
-                        targetEl = targetEl.parentNode;
-                    } while (targetEl);
-                    deb('OUTSDE FORM');
-                    let FORM = document.querySelectorAll('.LabelTop, .LBopen, .inputFocus')
-                    deb(FORM)
-                    FORM.forEach((el) => {
-                        el.removeAttribute('class', 'LabelTop');
-                        el.removeAttribute('class', 'LBopen');
-                        el.removeAttribute('class', 'inputFocus');
-                    })
+            document.addEventListener('click', (evt) => {
+                deb(evt.target.classList.contains('isActive'))
+                let FORM = document.querySelectorAll(".isActive");
+                if(evt.target.parentNode.classList === undefined || !evt.target.parentNode.classList.contains('isActive')){
+
+                FORM.forEach((el) => { 
                     deb(el)
-                    // el.previousSibling.removeAttribute('class', 'LabelTop');
-                    // el.nextSibling.removeAttribute('class', 'LBopen');
-                    // el.removeAttribute('class', 'inputFocus');
-                    return inside;
+                    el.classList.remove('class', 'isActive');
                 });
-                deb('4', inside);
-                return inside;
-            }
+                }
+
+
+                // const flyoutEl = el;
+                // let targetEl = evt.target;
+                // do {
+                //     if (targetEl == flyoutEl) {
+                //         inside = 'true';
+                //         deb('INSIDE FORM');
+                //         return true;
+                //     }
+                //     targetEl = targetEl.parentNode;
+                // } while (targetEl); 
+            },false);
+
+
+
+
+
+            // function isClickInside(el) {
+            //     let inside = 'false';
+            //     document.addEventListener('click', (evt) => {
+            //         const flyoutEl = el;
+            //         let targetEl = evt.target;
+            //         do {
+            //             if (targetEl == flyoutEl) {
+            //                 inside = 'true';
+            //                 deb('INSIDE FORM');
+            //                 return true;
+            //             }
+            //             targetEl = targetEl.parentNode;
+            //         } while (targetEl);
+            //         deb('OUTSDE FORM');
+            //         let FORM = document.querySelectorAll('.LabelTop, .LBopen, .inputFocus')
+            //         deb(FORM)
+            //         FORM.forEach((el) => {
+            //             //
+            //             //
+            //             //
+            //             // classe .active dem LostBox div hinzufügenund dann die Herachie waltem laase
+            //             // so muss nur die eine  Klasse entfernt werde
+            //             //
+            //             //
+            //             //
+
+            //             el.removeAttribute('class', 'LabelTop');
+            //             el.removeAttribute('class', 'LBopen');
+            //             el.removeAttribute('class', 'inputFocus');
+            //         })
+            //         deb(el)
+            //         // el.previousSibling.removeAttribute('class', 'LabelTop');
+            //         // el.nextSibling.removeAttribute('class', 'LBopen');
+            //         // el.removeAttribute('class', 'inputFocus');
+            //         return inside;
+            //     });
+            //     deb('4', inside);
+            //     return inside;
+            // }
 
             window.addEventListener('load', function () {
                 // //
