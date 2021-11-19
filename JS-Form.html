@@ -78,7 +78,7 @@
             .floatLabel .inputGroup,
             .floatLabel .InputElement,
             .floatLabel .TextareaElement,
-            .floatLabel .CkbList {
+            .floatLabel .ListBox {
                 display: block;
                 width: 100%;
                 /* height:1.9em; */
@@ -116,8 +116,8 @@
                 -webkit-transition: 0.4s;
                 transition: 0.2s;
             }
-            .floatLabel input.visible::placeholder,
-            .floatLabel textarea.visible::placeholder {
+            .floatLabel input.showPlaceholder::placeholder,
+            .floatLabel textarea.showPlaceholder::placeholder {
                 opacity: 0.5;
                 -webkit-transition: 0.4s;
                 transition: 0.4s;
@@ -178,7 +178,7 @@
                 -webkit-transition: 0.1s;
                 transition: 0.1s;
             }
-            .floatLabel .CkbList ul {
+            .floatLabel .ListBox ul {
                 position: absolute;
                 max-height: 0px;
                 overflow: hidden;
@@ -191,38 +191,39 @@
                 -webkit-transition: 0.3s;
                 transition: 0.3s;
             }
-            .floatLabel .CkbList ul.ListDropped {
+            .floatLabel .ListBox ul.LBopen {
                 max-height: 200px;
                 left: 2px;
                 top: calc(2em + 3px);
                 overflow-y: scroll;
                 overflow-x: hidden;
                 scrollbar-width: thin;
+                z-index: 5;
                 outline: #000 solid 1px;
                 -webkit-transition: 0.3s;
                 transition: 0.3s;
             }
-            .floatLabel .CkbList ul.ListDropped::-webkit-scrollbar {
+            .floatLabel .ListBox ul.LBopen::-webkit-scrollbar {
                 height: 0px;
                 width: 5px;
                 background: #fff;
             }
-            .floatLabel .CkbList ul.ListDropped::-webkit-scrollbar-thumb {
+            .floatLabel .ListBox ul.LBopen::-webkit-scrollbar-thumb {
                 background: #ccc;
                 /* -webkit-box-shadow: 0px 1px 2px #555; */
             }
-            .floatLabel .CkbList ul.ListDropped::-webkit-scrollbar-corner {
+            .floatLabel .ListBox ul.LBopen::-webkit-scrollbar-corner {
                 background: #fff;
             }
-            .floatLabel .CkbList li input:checked ~ label {
+            .floatLabel .ListBox li input:checked ~ label {
                 background: #ddd;
             }
-            .floatLabel .CkbList li input:checked ~ label:hover,
-            .floatLabel .CkbList li label:hover {
+            .floatLabel .ListBox li input:checked ~ label:hover,
+            .floatLabel .ListBox li label:hover {
                 background: #eee;
                 cursor: pointer;
             }
-            .floatLabel .CkbList li label {
+            .floatLabel .ListBox li label {
                 display: inline-block;
                 padding: 0.25em 0.5em;
                 line-height: 1em;
@@ -237,12 +238,12 @@
             .CheckboxElement {
                 /* position: relative; */
             }
-            .floatLabel  .InputCheckbox label{
+            .floatLabel .InputCheckbox label {
                 position: relative;
                 left: 0;
                 top: 0;
                 padding: 0.3em 0.5em 0.25em 0.25em;
-                pointer-events:initial;
+                pointer-events: initial;
                 cursor: pointer;
                 font-size: 1em;
                 color: #555;
@@ -256,7 +257,7 @@
                 margin-bottom: 0.5em;
                 margin-top: -0.5em;
             }
- 
+
             .floatLabel .InputCheckbox [type='checkbox'] {
                 position: relative;
                 left: 15px;
@@ -300,6 +301,7 @@
         <div id="FORM"></div>
         <div id="FORMVALUES" style="opacity: 0"></div>
         <script id="CREATEFORM">
+            const deb = console.log.bind(window.console);
             //let FORM = document.getElementById("FORM");
 
             // Create a break line element
@@ -309,7 +311,6 @@
                 // make obj handles
                 let data = json.FormData;
                 let meta = json.FormMeta;
-
                 //
                 // create the form
                 let form = document.createElement('form');
@@ -325,7 +326,6 @@
                     if ('text' === d.type) {
                         form.appendChild(createInputText(d));
                     }
-
                     // TEXTAREA
                     if ('textarea' === d.type) {
                         form.appendChild(createTextarea(d));
@@ -343,7 +343,7 @@
 
                     // SELECT
                     if ('select' === d.type) {
-                        form.appendChild(createSelectList(d));
+                        form.appendChild(createListBox(d));
                     }
 
                     // INPUTGROUP
@@ -369,15 +369,16 @@
                 //
                 // INPUT TEXT
                 //
-                function createSelectList(d) {
+                function createListBox(d) {
                     // SOURROUNDING DIV
                     let div = document.createElement('div');
-                    div.setAttribute('class', 'CkbList');
+                    div.setAttribute('class', 'ListBox');
                     // INPUT FIELD
                     let input = document.createElement('input');
                     input.setAttribute('type', d.type);
                     input.setAttribute('name', d.name);
-                    input.setAttribute('class', 'CkbListInput');
+                    input.setAttribute('class', 'ListBoxInput');
+                    input.setAttribute('onclick', 'openListBox(this)');
                     input.setAttribute('placeholder', d.placeholder);
                     // input.setAttribute('value', d.placeholder);
                     // LABEL
@@ -386,21 +387,21 @@
                     // LIST
                     let ul = document.createElement('ul');
                     d.items.forEach((i) => {
-                        // console.log(i)
+                        // deb(i)
                         let li = document.createElement('li');
                         // li.textContent = i.name;
                         // li.setAttribute('data-value', i.value);
                         // LABEL
                         let ItemLabel = document.createElement('label');
                         ItemLabel.textContent = i.name;
-                        ItemLabel.setAttribute('class', 'CkbListItem');
+                        ItemLabel.setAttribute('class', 'ListBoxItem');
                         ItemLabel.setAttribute('for', i.value);
                         // CHECKBOX
                         let ckbox = document.createElement('input');
                         ckbox.setAttribute('type', 'checkbox');
                         ckbox.setAttribute('name', i.name);
                         ckbox.setAttribute('id', i.value);
-                        ckbox.setAttribute('class', 'CkbListItem');
+                        ckbox.setAttribute('class', 'ListBoxItem');
                         ckbox.setAttribute('style', 'display:none');
                         // CONCAT LISTITEMS
                         li.appendChild(ckbox);
@@ -539,65 +540,191 @@
                 fieldset.appendChild(form);
                 // INSERT IN DOM
                 document.getElementById(meta.ID).appendChild(fieldset);
+            } // createForm
+        </script>
 
-                //
-                // EVENTS FOR ALL INPUT TEXT && TEXTAREAS
-                let FormElement = document.querySelectorAll("input[type='text'],input[type='select'], textarea");
-                // console.log(inputText)
+        <script id="EVENTHANDLER">
+            function openListBox(el) {
+                // deb(el);
+                el.previousSibling.setAttribute('class', 'LabelTop');
+                el.nextSibling.setAttribute('class', 'LBopen');
+                el.setAttribute('class', 'inputFocus');
 
-                FormElement.forEach(function (el) {
-                    // console.log(el)
-                    //
-                    // IF FIELD HAS A PRESETTED VALUE
-                    if (el.value) {
-                        // AD CLASS TO LABLE TO LIFT IT UP
-                        //   el.previousSibling.setAttribute('class', 'LabelTop');
-                        // ADD CLASS TO SHOW PLACEHOLDER
-                        el.setAttribute('class', 'visible');
-                    }
+                deb(isClickInside(el.parentNode));
+                // if (isClickInside(el.parentNode)) {
+                //     deb('isClickInside');
+                //     el.previousSibling.removeAttribute('class', 'LabelTop');
+                //     el.nextSibling.removeAttribute('class', 'LBopen');
+                //     el.removeAttribute('class', 'inputFocus');
+                // }
 
-                    // IF FIELD IS IN FOCUS
-                    el.addEventListener('focus', function () {
-                        // AD CLASS TO LABLE TO LIFT IT UP
-                        el.previousSibling.setAttribute('class', 'LabelTop');
-                        // ADD CLASS TO SHOW PLACEHOLDER
-                        el.setAttribute('class', 'visible');
-                        // el.setAttribute('class','inputFocus')
-                        // el.classList.add("visible","inputFocus");
-                        // el.classList.add("inputFocus");
-
-                        //
-                        // DROPDOWN SELECT LIST
-                        if ('select' === el.attributes.type.nodeValue) {
-                            el.nextSibling.setAttribute('class', 'ListDropped');
-
-                            //   el.classList.add('inputFocus');
-                            //   el.nextSibling.setAttribute('class', 'inputFocus');
-
-                            // console.log(el)
-                            // el.setAttribute('class', 'LabelTop');
-                        }
-                    }); // addEventListener(focus)
-
-                    //
-                    // IF FIELD IS NOT IN FOCUS
-                    el.addEventListener('blur', function () {
-                        if (!el.value) {
-                            //   console.log("blur")
-                            // REMOVE CLASS FROM LABLE
-                            el.previousSibling.removeAttribute('class', 'LabelTop');
-                            // REMOVE CLASS TO HIDE PLACEHOLDER & SCHOW LABLE AGAIN
-                            // el.removeAttribute('class', 'visible');
-                            el.classList.remove('visible');
-                        }
-                        // DROPDOWN SELECT LIST
-                        if ('select' === el.attributes.type.nodeValue) {
-                            // el.nextSibling.removeAttribute('class', 'ListDropped');
-                        }
-                    });
-
-                    // console.log(el.attributes.type.nodeValue)
+                document.addEventListener('click', (evt) => {
+                    // deb(evt.target.getAttribute('class'));
                 });
+            }
+
+            function init(el) {
+                var canvas = document.getElementById(el);
+                canvas.addEventListener(
+                    'mousedown',
+                    function (event) {
+                        deb("oo")
+                        return el;
+
+                        // result is your return value
+                    },
+                    false
+                ); 
+            }
+            deb(init('FORM'))
+
+
+
+            function isClickInside(el) {
+                // deb("\n\n")
+                // deb(el)
+                let inside = 'false';
+                document.addEventListener('click', (evt) => {
+                    // deb(evt.target)
+                    // const flyoutEl = document.getElementById('FORM');
+                    const flyoutEl = el;
+                    // deb('el');
+                    // deb(el);
+                    let targetEl = evt.target;
+                    // deb('targetEl');
+                    do {
+                        // deb(targetEl);
+                        if (targetEl == flyoutEl) {
+                            inside = 'true';
+                            // deb('INSDE FORM');
+                            // deb('2',inside);
+
+                            return;
+                        }
+                        // Go up the DOM
+                        targetEl = targetEl.parentNode;
+                    } while (targetEl);
+                    // deb('OUTSDE FORM');
+                    // deb('3',inside);
+                    return inside;
+                });
+                // deb('4',inside);
+                return inside;
+            }
+
+            window.addEventListener('load', function () {
+                // //
+                // // GET ITEMS OF LISTBOX UL
+                // //
+                // const ListBox = document.querySelectorAll('.ListBox ul');
+                // // deb(ListBox)
+                // // FOREACH LISTBOX
+                // ListBox.forEach(function (ul) {
+                //     const CKBBOX = ul.querySelectorAll('input');
+                //     //   deb(CKBBOX)
+
+                //     ul.addEventListener('click', (evt) => {
+                //         let inputSelect = evt.target.parentNode.parentNode.previousSibling;
+                //         deb('\n\n NEW CLICK');
+                //         deb(evt.target);
+                //         if ('ListBoxItem' === evt.target.getAttribute('class')) {
+                //             // COLLECT ALL VALUES FROM CHECKED CHECKBOXES
+                //             let InputItems = '';
+                //             ul.childNodes.forEach(function (li) {
+                //                 if (li.firstChild.checked) {
+                //                     InputItems += li.firstChild.name + ', ';
+                //                 }
+                //             });
+                //             if (InputItems) {
+                //                 inputSelect.classList.add('inputFocus');
+                //                 inputSelect.value = InputItems.replace(/,\s*$/, '');
+                //             } else {
+                //                 // IF INPUTITEMS IS EMPTY, REMOVE STRING FROM INPUT VALUE && AND SET FOCUS FOR PLACEHOLDER
+                //                 inputSelect.focus();
+                //                 inputSelect.value = null;
+                //             }
+
+                //             // IF CKICK IS OUTSINE OF LISTBOX
+                //             // } else if (evt.target.querySelector('.ListBoxItem')) {
+                //             // } else if ('showPlaceholder' !== evt.target.getAttribute('class')) {
+                //         } else {
+                //             // CLOSE LISTBOX
+                //             // deb(evt.target.parentNode.parentNode);
+                //             // evt.target.parentNode.parentNode.removeAttribute('class', 'LBopen');
+                //             // inputSelect.setAttribute('class', 'LabelTop');
+
+                //             // // MOVE BACK LISTBOX INPUT
+                //             // inputSelect.removeAttribute('class', 'inputFocus');
+                //         }
+                //     });
+                // });
+                // document.addEventListener('click', (evt) => {
+                //     deb(evt.target);
+
+                //     if ('ListBoxItem' !== evt.target.getAttribute('class')) {
+                //         const ListBox = document.querySelectorAll('.ListBox ul');
+                //         ListBox.forEach(function (ul) {
+                //             ul.removeAttribute('class', 'LBopen');
+                //             ul.previousSibling.setAttribute('class', 'LabelTop');
+
+                //             // MOVE BACK LISTBOX INPUT
+                //             ul.previousSibling.removeAttribute('class', 'inputFocus');
+                //         });
+
+                //         deb('doc');
+                //         deb(evt.target.getAttribute('class'));
+                //     }
+                // });
+
+                // //
+                // // EVENTS FOR ALL INPUT TEXT && TEXTAREAS
+                // let FormElement = document.querySelectorAll("input[type='text'],input[type='select'], textarea");
+                // FormElement.forEach(function (el) {
+                //     // deb(el)
+                //     //
+                //     // IF FIELD HAS A PRESETTED VALUE
+                //     if (el.value) {
+                //         // AD CLASS TO LABLE TO LIFT IT UP
+                //         //   el.previousSibling.setAttribute('class', 'LabelTop');
+                //         // ADD CLASS TO SHOW PLACEHOLDER
+                //         el.setAttribute('class', 'showPlaceholder');
+                //     }
+
+                //     // IF FIELD IS IN FOCUS
+                //     el.addEventListener('focus', function () {
+                //         // AD CLASS TO LABLE TO LIFT IT UP
+                //         el.previousSibling.setAttribute('class', 'LabelTop');
+                //         // ADD CLASS TO SHOW PLACEHOLDER
+                //         el.setAttribute('class', 'showPlaceholder');
+                //         //
+                //         // DROPDOWN SELECT LIST
+                //         if ('select' === el.attributes.type.nodeValue) {
+                //             el.nextSibling.setAttribute('class', 'LBopen');
+                //             //   el.classList.add('inputFocus');
+                //             //   el.nextSibling.setAttribute('class', 'inputFocus');
+                //             deb(el);
+                //             // el.setAttribute('class', 'LabelTop');
+                //         }
+                //     }); // addEventListener(focus)
+
+                //     //
+                //     // IF FIELD IS NOT IN FOCUS
+                //     el.addEventListener('blur', function () {
+                //         if (!el.value) {
+                //             //   deb("blur")
+                //             // REMOVE CLASS FROM LABLE
+                //             el.previousSibling.removeAttribute('class', 'LabelTop');
+                //             // REMOVE CLASS TO HIDE PLACEHOLDER & SCHOW LABLE AGAIN
+                //             // el.removeAttribute('class', 'showPlaceholder');
+                //             el.classList.remove('showPlaceholder');
+                //         }
+                //         // DROPDOWN SELECT LIST
+                //         if ('select' === el.attributes.type.nodeValue) {
+                //             // el.nextSibling.removeAttribute('class', 'LBopen');
+                //         }
+                //     });
+                //     // deb(el.attributes.type.nodeValue)
+                // }); //ForEach FormElement
 
                 //
                 // SET SUBMIT BUTTON STATE
@@ -607,93 +734,37 @@
                         this.classList.remove('submitButtonActive');
                     });
                 });
-            } // createForm
+            }); // window.load (EVENTHANDLER)
         </script>
+
         <script id="FORMSUBMIT">
             window.addEventListener('load', function () {
                 function showData() {
                     let FormName = data.FormMeta.name;
                     let FormElements = document.forms[FormName].elements;
-                    // console.log(FormElements);
+                    // deb(FormElements);
                     FormValues = {};
                     for (let element of FormElements) {
                         if (element.value && element.name) {
-                            // remove CkbList checkboxGroup
-                            if ('CkbListItem' === element.getAttribute('class')) {
+                            // remove ListBox checkboxGroup
+                            if ('ListBoxItem' === element.getAttribute('class')) {
                                 continue;
                             }
-                            // console.log(element.getAttribute('class'));
+                            // deb(element.getAttribute('class'));
                             FormValues[element.name] = element.value;
                         }
                     }
-                    // console.log(FormValues)
+                    // deb(FormValues)
                     let values = JSON.stringify(FormValues, undefined, 4);
                     values = values.replaceAll('{', '');
                     values = values.replaceAll('}', '');
                     values = values.replaceAll('"', '');
                     // values = values.replaceAll(',', '');
                     values = values.replaceAll('    ', '');
-                    // values = '<h3>' + data.FormMeta.name + '-Values</h3>' + values;
                     let FORMVALUES = document.getElementById('FORMVALUES');
                     FORMVALUES.innerHTML = "<fieldset><legend style='font-size: 1.4em'>Form Values</legend><pre>" + values + '</pre></fieldset>';
                     FORMVALUES.style.opacity = 1;
                 }
-
-                //
-                // GET OUTSIDECLICK OF CKBLIIST UL
-                //
-                const CKBLIST = document.querySelectorAll('.CkbList ul');
-                // console.log(CKBLIST)
-                // FOREACH CKBLIIST
-                CKBLIST.forEach(function (ul) {
-                    const CKBBOX = ul.querySelectorAll('input');
-                    //   console.log(CKBBOX)
-
-                    document.addEventListener('click', (evt) => {
-                        console.log('\n\n NEW CLICK');
-                        console.log(evt.target);
-                        if ('CkbListItem' === evt.target.getAttribute('class')) {
-                            // if ('INPUT' === evt.target.tagName) {
-                            console.log('INSIDE');
-                            console.log(evt.target);
-                            let InputItems = '';
-                            // ul.previousSibling.setAttribute('class','focus')
-                            // console.log(evt.target.getAttribute("class"))
-                            // console.log(ul.children)
-                            // console.log(' ');
-                            //   console.log(' ')
-                            //   console.log(' ')
-                            //   console.log('ul.childNodes')
-
-                            ul.childNodes.forEach(function (li) {
-                                //   console.log(li)
-                                // console.log(li.firstChild.checked)
-                                if (li.firstChild.checked) {
-                                    console.log('checked NAME', li.firstChild.name);
-                                    InputItems += li.firstChild.name + ', ';
-                                }
-                            });
-
-                            if (InputItems) {
-                                //   NEXT NECCESARY? YES
-                                ul.previousSibling.classList.add('inputFocus');
-                                // console.log('InputItems NAME', InputItems);
-                                // console.log(ul.previousSibling)
-                                ul.previousSibling.value = InputItems.replace(/,\s*$/, '');
-                            } else {
-                                // IF INPUTITEMS IS EMPTY, REMOVE STRING FROM INPUT VALUE && AND SET FOCUS FOR PLACEHOLDER
-                                ul.previousSibling.focus();
-                                ul.previousSibling.value = null;
-                            }
-                            // } else if ('LABEL' !== evt.target.tagName) {
-                        } else if ('visible' !== evt.target.getAttribute('class')) {
-                            console.log('OUTSIDE');
-                            console.log(evt.target);
-                            ul.removeAttribute('class', 'ListDropped');
-                            ul.previousSibling.removeAttribute('class', 'inputFocus');
-                        }
-                    });
-                });
 
                 //
                 // CLICKHANDLER for everything?
@@ -708,10 +779,10 @@
                             FORMVALUES.style.opacity = 0;
                             return;
                         }
-                        // console.log(targetElement);
+                        // deb(targetElement);
                         targetElement = targetElement.parentNode;
                     } while (targetElement);
-                    // console.log('outside');
+                    // deb('outside');
                 });
 
                 //
@@ -721,7 +792,7 @@
                     const FORMVALUES = document.querySelector('#FORMVALUES');
                     var isEscape = false;
                     if ('key' in evt) {
-                        // console.log(evt);
+                        // deb(evt);
                         if (evt.key === 'Escape' || evt.key === 'Esc') {
                             FORMVALUES.style.opacity = 0;
                         }
@@ -732,13 +803,13 @@
                 //     const XHR = new XMLHttpRequest();
                 //     const FD = new FormData(form);
                 //     XHR.addEventListener('load', function (event) {
-                //         console.log(event.target.responseText);
+                //         deb(event.target.responseText);
                 //     });
                 //     XHR.addEventListener('error', function (event) {
-                //         console.log('Oops! Something went wrong.');
+                //         deb('Oops! Something went wrong.');
                 //     });
                 //     XHR.open('POST', 'api.php');
-                //     console.log(form);
+                //     deb(form);
                 //     XHR.send(FD);
                 // }
                 const form = document.getElementById('FORM');
@@ -865,9 +936,81 @@
                             },
                         ],
                     },
+                    {
+                        type: 'text',
+                        name: 'email',
+                        titel: 'E-Mail',
+                        placeholder: 'please give us a way to contact you',
+                    },
+                    {
+                        type: 'text',
+                        name: 'email',
+                        titel: 'E-Mail',
+                        placeholder: 'please give us a way to contact you',
+                    },
+                    {
+                        type: 'text',
+                        name: 'email',
+                        titel: 'E-Mail',
+                        placeholder: 'please give us a way to contact you',
+                    },
+                    {
+                        type: 'text',
+                        name: 'email',
+                        titel: 'E-Mail',
+                        placeholder: 'please give us a way to contact you',
+                    },
+                    {
+                        type: 'text',
+                        name: 'email',
+                        titel: 'E-Mail',
+                        placeholder: 'please give us a way to contact you',
+                    },
+                    {
+                        type: 'text',
+                        name: 'email',
+                        titel: 'E-Mail',
+                        placeholder: 'please give us a way to contact you',
+                    },
+                    {
+                        type: 'select',
+                        name: 'dinosaurs',
+                        titel: 'xxx',
+                        placeholder: 'choose your favorites, yes more than one!',
+                        items: [
+                            {
+                                name: 'BrachiosaurusN',
+                                value: 'BrachiosaurusVx',
+                            },
+                            {
+                                name: 'Iguanodon',
+                                value: 'Iguanodonx',
+                            },
+                            {
+                                name: 'Dryosaurus',
+                                value: 'Dryosaurusx',
+                            },
+                            {
+                                name: 'Tenontosaurus',
+                                value: 'Tenontosaurusx',
+                            },
+                            {
+                                name: 'Argentinosaurus',
+                                value: 'Argentinosaurusx',
+                            },
+                            {
+                                name: 'Brontosaurus',
+                                value: 'Brontosaurusx',
+                            },
+                            {
+                                name: 'Tyrannosaurus',
+                                value: 'Tyrannosaurusx',
+                            },
+                        ],
+                    },
                 ],
             };
-            // console.log(data);
+            // deb(data);
             createForm(data);
         </script>
     </body>
