@@ -563,33 +563,37 @@
                 // });
             }
 
-            document.addEventListener('click', (evt) => {
-                deb(evt.target.classList.contains('isActive'))
-                let FORM = document.querySelectorAll(".isActive");
-                if(evt.target.parentNode.classList === undefined || !evt.target.parentNode.classList.contains('isActive')){
+            document.addEventListener(
+                'click',
+                (evt) => {
+                    deb(evt.target.classList.contains('isActive'));
+                    const isActive = document.querySelectorAll('.isActive');
+                    // if (evt.target.parentNode.classList === undefined || !evt.target.parentNode.classList.contains('isActive')) {
+                    //     isActive.forEach((el) => {
+                    //         deb(el);
+                    //         el.classList.remove('class', 'isActive');
+                    //     });
+                    // }
 
-                FORM.forEach((el) => { 
-                    deb(el)
-                    el.classList.remove('class', 'isActive');
-                });
-                }
+                    let targetEl = evt.target;
+                    do {
+                        deb(targetEl);
+                        // if (!targetEl.classList === undefined || !targetEl.classList.contains('isActive')) {
+                        if (targetEl.classList !== undefined && targetEl.classList.contains('isActive')) {
+                            deb('INSIDE FORM');
+                            return;
+                        }
+                        targetEl = targetEl.parentNode;
+                    } while (targetEl);
+                    deb('OUTSDE FORM');
 
-
-                // const flyoutEl = el;
-                // let targetEl = evt.target;
-                // do {
-                //     if (targetEl == flyoutEl) {
-                //         inside = 'true';
-                //         deb('INSIDE FORM');
-                //         return true;
-                //     }
-                //     targetEl = targetEl.parentNode;
-                // } while (targetEl); 
-            },false);
-
-
-
-
+                    isActive.forEach((el) => {
+                        deb(el);
+                        el.classList.remove('class', 'isActive');
+                    });
+                },
+                true
+            );
 
             // function isClickInside(el) {
             //     let inside = 'false';
