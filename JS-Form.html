@@ -98,7 +98,8 @@
                 transition: 0.2s;
             }
 
-            .floatLabel label.LabelTop {
+            .floatLabel .isActive label,
+            .floatLabel label.isTop {
                 top: -1em;
                 left: 0.5em;
                 padding: 0.1em 0.1em;
@@ -116,8 +117,8 @@
                 -webkit-transition: 0.4s;
                 transition: 0.2s;
             }
-            .floatLabel input.showPlaceholder::placeholder,
-            .floatLabel textarea.showPlaceholder::placeholder {
+            .floatLabel .isActive input::placeholder,
+            .floatLabel .isActive textarea::placeholder {
                 opacity: 0.5;
                 -webkit-transition: 0.4s;
                 transition: 0.4s;
@@ -170,7 +171,7 @@
             }
             .floatLabel select:focus,
             .floatLabel input[type='text']:focus,
-            .floatLabel input.inputFocus,
+            .floatLabel .isActive input,
             .floatLabel textarea:focus,
             .floatLabelButton.submitButtonActive {
                 box-shadow: 2px 2px 0 #777 !important;
@@ -186,33 +187,39 @@
                 width: 100%;
                 list-style: none;
                 padding: 0;
+                z-index: 5;
+
                 margin: 0;
-                box-shadow: 2px 2px 0 #555, -1px -1px 0px 0px #000;
                 -webkit-transition: 0.3s;
                 transition: 0.3s;
             }
             .floatLabel .ListBox.isActive ul {
-                max-height: 200px;
+                max-height: 100px;
                 left: 2px;
-                top: calc(2em + 3px);
+                /* FF */
+                top: calc(2em + 2px);
+                /* Chrome */
+                top: 2em;
                 overflow-y: scroll;
                 overflow-x: hidden;
                 scrollbar-width: thin;
                 z-index: 5;
                 outline: #000 solid 1px;
+                box-shadow: 2px 2px 0 #555, -1px -1px 0px 0px #000;
                 -webkit-transition: 0.3s;
                 transition: 0.3s;
             }
-            .floatLabel .ListBox ul.LBopen::-webkit-scrollbar {
+
+            .floatLabel .ListBox.isActive ul::-webkit-scrollbar {
                 height: 0px;
                 width: 5px;
                 background: #fff;
             }
-            .floatLabel .ListBox ul.LBopen::-webkit-scrollbar-thumb {
+            .floatLabel .ListBox.isActive ul::-webkit-scrollbar-thumb {
                 background: #ccc;
                 /* -webkit-box-shadow: 0px 1px 2px #555; */
             }
-            .floatLabel .ListBox ul.LBopen::-webkit-scrollbar-corner {
+            .floatLabel .ListBox.isActive ul::-webkit-scrollbar-corner {
                 background: #fff;
             }
             .floatLabel .ListBox li input:checked ~ label {
@@ -367,7 +374,7 @@
                 });
 
                 //
-                // INPUT TEXT
+                // CREATE LISTBOX
                 //
                 function createListBox(d) {
                     // SOURROUNDING DIV
@@ -389,13 +396,13 @@
                     d.items.forEach((i) => {
                         // deb(i)
                         let li = document.createElement('li');
-                        // li.textContent = i.name;
-                        // li.setAttribute('data-value', i.value);
                         // LABEL
                         let ItemLabel = document.createElement('label');
                         ItemLabel.textContent = i.name;
                         ItemLabel.setAttribute('class', 'ListBoxItem');
                         ItemLabel.setAttribute('for', i.value);
+                        // ItemLabel.setAttribute('onclick', 'addListBoxItem(this)');
+
                         // CHECKBOX
                         let ckbox = document.createElement('input');
                         ckbox.setAttribute('type', 'checkbox');
@@ -403,6 +410,8 @@
                         ckbox.setAttribute('id', i.value);
                         ckbox.setAttribute('class', 'ListBoxItem');
                         ckbox.setAttribute('style', 'display:none');
+                        ckbox.setAttribute('onclick', 'addListBoxItem(this)');
+
                         // CONCAT LISTITEMS
                         li.appendChild(ckbox);
                         li.appendChild(ItemLabel);
@@ -417,7 +426,7 @@
                 }
 
                 //
-                // checkboxGroup
+                // CREATE CHECKBOXGROUP
                 //
                 function createcheckboxGroup(d) {
                     // SOURROUNDING DIV
@@ -437,7 +446,7 @@
                 }
 
                 //
-                // INPUT TEXT
+                // CREATE INPUT TEXT
                 //
                 function createInputText(d) {
                     // SOURROUNDING DIV
@@ -448,6 +457,7 @@
                     input.setAttribute('type', d.type);
                     input.setAttribute('name', d.name);
                     input.setAttribute('placeholder', d.placeholder);
+                    input.setAttribute('onclick', 'activateInput(this)');
                     // input.setAttribute('value', d.placeholder);
                     // LABEL
                     let label = document.createElement('label');
@@ -459,7 +469,7 @@
                 }
 
                 //
-                // INPUT CHECKBOX
+                // CREATE INPUT CHECKBOX
                 //
                 function createInputCheckbox(d) {
                     // SOURROUNDING DIV
@@ -488,7 +498,7 @@
                 }
 
                 //
-                // TEXTAREA
+                // CREATE TEXTAREA
                 //
                 function createTextarea(d) {
                     //
@@ -502,6 +512,7 @@
                     input.setAttribute('type', d.type);
                     input.setAttribute('name', d.name);
                     input.setAttribute('placeholder', d.placeholder);
+                    input.setAttribute('onclick', 'activateInput(this)');
                     // input.setAttribute('value', d.placeholder);
 
                     //
@@ -544,96 +555,94 @@
         </script>
 
         <script id="EVENTHANDLER">
+            //
+            // OPEN LISBOX
+            //
             function openListBox(el) {
-                // deb(el);
-                // el.previousSibling.setAttribute('class', 'LabelTop');
-                // el.nextSibling.setAttribute('class', 'LBopen');
-                // el.setAttribute('class', 'inputFocus');
-                el.parentNode.classList.add('class', 'isActive');
-                // deb(isClickInside(el.parentNode));
-                // if (isClickInside(el.parentNode)) {
-                //     deb('isClickInside');
-                //     el.previousSibling.removeAttribute('class', 'LabelTop');
-                //     el.nextSibling.removeAttribute('class', 'LBopen');
-                //     el.removeAttribute('class', 'inputFocus');
-                // }
-
-                // document.addEventListener('click', (evt) => {
-                // deb(evt.target.getAttribute('class'));
-                // });
+                el.parentNode.classList.add('isActive');
             }
 
-            document.addEventListener(
-                'click',
-                (evt) => {
-                    deb(evt.target.classList.contains('isActive'));
-                    const isActive = document.querySelectorAll('.isActive');
-                    // if (evt.target.parentNode.classList === undefined || !evt.target.parentNode.classList.contains('isActive')) {
-                    //     isActive.forEach((el) => {
-                    //         deb(el);
-                    //         el.classList.remove('class', 'isActive');
-                    //     });
-                    // }
+            //
+            // ACTIVATE INPUT
+            //
+            function activateInput(el) {
+                el.parentNode.classList.add('isActive');
+            }
 
-                    let targetEl = evt.target;
-                    do {
-                        deb(targetEl);
-                        // if (!targetEl.classList === undefined || !targetEl.classList.contains('isActive')) {
-                        if (targetEl.classList !== undefined && targetEl.classList.contains('isActive')) {
-                            deb('INSIDE FORM');
-                            return;
-                        }
-                        targetEl = targetEl.parentNode;
-                    } while (targetEl);
-                    deb('OUTSDE FORM');
+            //
+            // LISTBOXITEM TO INPUT
+            //
+            function addListBoxItem(el) {
+                // get ckeckbox value, input element & lable
+                let ckbValue = el.id;
+                let InputValue = el.parentNode.parentNode.previousSibling.value;
+                let InputLabel = el.parentNode.parentNode.previousSibling.previousSibling;
+                // add (remove) value to input
+                if (el.checked) {
+                    el.parentNode.parentNode.previousSibling.value = InputValue + ckbValue + ', ';
+                } else {
+                    el.parentNode.parentNode.previousSibling.value = InputValue.replace(ckbValue + ', ', '');
+                }
+                var event = new Event('change');
+                el.parentNode.parentNode.previousSibling.dispatchEvent(event);
+                // set label on top if input ha a value and vice versa
+                if (0 < el.parentNode.parentNode.previousSibling.value.length) {
+                    InputLabel.setAttribute('class', 'isTop');
+                } else {
+                    InputLabel.removeAttribute('class', 'isTop');
+                }
+            }
 
-                    isActive.forEach((el) => {
-                        deb(el);
-                        el.classList.remove('class', 'isActive');
-                    });
-                },
-                true
-            );
+            window.addEventListener('load', function () {
+                //
+                // EVENTLISTENER CLICK
+                //
+                document.addEventListener(
+                    'click',
+                    (evt) => {
+                        let targetEl = evt.target;
+                        // set input as notActive (remove isActive), lable down, shaddow move back, close ListBox
+                        // loop up over elements and search for .isActive class,
+                        // if not found, remove all .isActive from the document
+                        do {
+                            if (targetEl.classList !== undefined && targetEl.classList.contains('isActive')) {
+                                return;
+                            }
+                            targetEl = targetEl.parentNode;
+                        } while (targetEl);
 
-            // function isClickInside(el) {
-            //     let inside = 'false';
-            //     document.addEventListener('click', (evt) => {
-            //         const flyoutEl = el;
-            //         let targetEl = evt.target;
-            //         do {
-            //             if (targetEl == flyoutEl) {
-            //                 inside = 'true';
-            //                 deb('INSIDE FORM');
-            //                 return true;
-            //             }
-            //             targetEl = targetEl.parentNode;
-            //         } while (targetEl);
-            //         deb('OUTSDE FORM');
-            //         let FORM = document.querySelectorAll('.LabelTop, .LBopen, .inputFocus')
-            //         deb(FORM)
-            //         FORM.forEach((el) => {
-            //             //
-            //             //
-            //             //
-            //             // classe .active dem LostBox div hinzufügenund dann die Herachie waltem laase
-            //             // so muss nur die eine  Klasse entfernt werde
-            //             //
-            //             //
-            //             //
+                        document.querySelectorAll('.isActive').forEach((el) => {
+                            el.classList.remove('isActive');
+                        });
+                    },
+                    true
+                );
 
-            //             el.removeAttribute('class', 'LabelTop');
-            //             el.removeAttribute('class', 'LBopen');
-            //             el.removeAttribute('class', 'inputFocus');
-            //         })
-            //         deb(el)
-            //         // el.previousSibling.removeAttribute('class', 'LabelTop');
-            //         // el.nextSibling.removeAttribute('class', 'LBopen');
-            //         // el.removeAttribute('class', 'inputFocus');
-            //         return inside;
-            //     });
-            //     deb('4', inside);
-            //     return inside;
-            // }
+                //
+                // EVENTLISTENER CHANGE
+                //
+                const allInputs = document.querySelectorAll("input[type='text'],input[type='select'], textarea");
+                allInputs.forEach(function (el) {
+                    // deb(el)
+                    const labelListBox = el.parentNode.parentNode.previousSibling;
+                    const label = el.previousSibling;
+                    el.addEventListener(
+                        'change',
+                        (evt) => {
+                            if (0 < el.value.length) {
+                                // deb(el.parentNode.parentNode.previousSibling);
+                                // deb(el.previousSibling);
+                                labelListBox.setAttribute('class', 'isTop');
+                                label.setAttribute('class', 'isTop');
+                            } else {
+                                labelListBox.removeAttribute('class', 'isTop');
+                                label.removeAttribute('class', 'isTop');
+                            }
+                        },
+                        true
+                    );
+                });
+            });
 
             window.addEventListener('load', function () {
                 // //
@@ -761,87 +770,87 @@
         </script>
 
         <script id="FORMSUBMIT">
-            // window.addEventListener('load', function () {
-            //     function showData() {
-            //         let FormName = data.FormMeta.name;
-            //         let FormElements = document.forms[FormName].elements;
-            //         // deb(FormElements);
-            //         FormValues = {};
-            //         for (let element of FormElements) {
-            //             if (element.value && element.name) {
-            //                 // remove ListBox checkboxGroup
-            //                 if ('ListBoxItem' === element.getAttribute('class')) {
-            //                     continue;
-            //                 }
-            //                 // deb(element.getAttribute('class'));
-            //                 FormValues[element.name] = element.value;
-            //             }
-            //         }
-            //         // deb(FormValues)
-            //         let values = JSON.stringify(FormValues, undefined, 4);
-            //         values = values.replaceAll('{', '');
-            //         values = values.replaceAll('}', '');
-            //         values = values.replaceAll('"', '');
-            //         // values = values.replaceAll(',', '');
-            //         values = values.replaceAll('    ', '');
-            //         let FORMVALUES = document.getElementById('FORMVALUES');
-            //         FORMVALUES.innerHTML = "<fieldset><legend style='font-size: 1.4em'>Form Values</legend><pre>" + values + '</pre></fieldset>';
-            //         FORMVALUES.style.opacity = 1;
-            //     }
+            window.addEventListener('load', function () {
+                function showData() {
+                    let FormName = data.FormMeta.name;
+                    let FormElements = document.forms[FormName].elements;
+                    // deb(FormElements);
+                    FormValues = {};
+                    for (let element of FormElements) {
+                        if (element.value && element.name) {
+                            // remove ListBox checkboxGroup
+                            if ('ListBoxItem' === element.getAttribute('class')) {
+                                continue;
+                            }
+                            // deb(element.getAttribute('class'));
+                            FormValues[element.name] = element.value;
+                        }
+                    }
+                    // deb(FormValues)
+                    let values = JSON.stringify(FormValues, undefined, 4);
+                    values = values.replaceAll('{', '');
+                    values = values.replaceAll('}', '');
+                    values = values.replaceAll('"', '');
+                    // values = values.replaceAll(',', '');
+                    values = values.replaceAll('    ', '');
+                    let FORMVALUES = document.getElementById('FORMVALUES');
+                    FORMVALUES.innerHTML = "<fieldset><legend style='font-size: 1.4em'>Form Values</legend><pre>" + values + '</pre></fieldset>';
+                    FORMVALUES.style.opacity = 1;
+                }
 
-            //     //
-            //     // CLICKHANDLER for everything?
-            //     document.addEventListener('click', (evt) => {
-            //         const LEGEND = document.querySelector('#FORMVALUES legend'); // DEV
-            //         const FORMVALUES = document.querySelector('#FORMVALUES'); // DEV
+                //
+                // CLICKHANDLER for everything?
+                document.addEventListener('click', (evt) => {
+                    const LEGEND = document.querySelector('#FORMVALUES legend'); // DEV
+                    const FORMVALUES = document.querySelector('#FORMVALUES'); // DEV
 
-            //         let targetElement = evt.target; // clicked element
-            //         do {
-            //             // REMOVE FORM VALUES (DEV)
-            //             if (targetElement == LEGEND) {
-            //                 FORMVALUES.style.opacity = 0;
-            //                 return;
-            //             }
-            //             // deb(targetElement);
-            //             targetElement = targetElement.parentNode;
-            //         } while (targetElement);
-            //         // deb('outside');
-            //     });
+                    let targetElement = evt.target; // clicked element
+                    do {
+                        // REMOVE FORM VALUES (DEV)
+                        if (targetElement == LEGEND) {
+                            FORMVALUES.style.opacity = 0;
+                            return;
+                        }
+                        // deb(targetElement);
+                        targetElement = targetElement.parentNode;
+                    } while (targetElement);
+                    // deb('outside');
+                });
 
-            //     //
-            //     // KEYHANDLER
-            //     document.onkeydown = function (evt) {
-            //         evt = evt || window.event;
-            //         const FORMVALUES = document.querySelector('#FORMVALUES');
-            //         var isEscape = false;
-            //         if ('key' in evt) {
-            //             // deb(evt);
-            //             if (evt.key === 'Escape' || evt.key === 'Esc') {
-            //                 FORMVALUES.style.opacity = 0;
-            //             }
-            //         }
-            //     };
+                //
+                // KEYHANDLER
+                document.onkeydown = function (evt) {
+                    evt = evt || window.event;
+                    const FORMVALUES = document.querySelector('#FORMVALUES');
+                    var isEscape = false;
+                    if ('key' in evt) {
+                        // deb(evt);
+                        if (evt.key === 'Escape' || evt.key === 'Esc') {
+                            FORMVALUES.style.opacity = 0;
+                        }
+                    }
+                };
 
-            //     // function sendData() {
-            //     //     const XHR = new XMLHttpRequest();
-            //     //     const FD = new FormData(form);
-            //     //     XHR.addEventListener('load', function (event) {
-            //     //         deb(event.target.responseText);
-            //     //     });
-            //     //     XHR.addEventListener('error', function (event) {
-            //     //         deb('Oops! Something went wrong.');
-            //     //     });
-            //     //     XHR.open('POST', 'api.php');
-            //     //     deb(form);
-            //     //     XHR.send(FD);
-            //     // }
-            //     const form = document.getElementById('FORM');
-            //     form.addEventListener('submit', function (event) {
-            //         event.preventDefault();
-            //         // sendData();
-            //         showData();
-            //     });
-            // });
+                // function sendData() {
+                //     const XHR = new XMLHttpRequest();
+                //     const FD = new FormData(form);
+                //     XHR.addEventListener('load', function (event) {
+                //         deb(event.target.responseText);
+                //     });
+                //     XHR.addEventListener('error', function (event) {
+                //         deb('Oops! Something went wrong.');
+                //     });
+                //     XHR.open('POST', 'api.php');
+                //     deb(form);
+                //     XHR.send(FD);
+                // }
+                const form = document.getElementById('FORM');
+                form.addEventListener('submit', function (event) {
+                    event.preventDefault();
+                    // sendData();
+                    showData();
+                });
+            });
         </script>
         <script id="JSONDATA">
             const data = {
@@ -920,13 +929,13 @@
                     {
                         type: 'textarea',
                         name: 'comment',
-                        titel: 'Comment',
+                        titel: 'Comment (textarea)',
                         placeholder: 'No newsletter please...',
                     },
                     {
                         type: 'select',
                         name: 'dinosaurs',
-                        titel: 'Dinosaurs',
+                        titel: 'Dinosaurs (select)',
                         placeholder: 'choose your favorites, yes more than one!',
                         items: [
                             {
@@ -966,68 +975,50 @@
                         placeholder: 'please give us a way to contact you',
                     },
                     {
-                        type: 'text',
-                        name: 'email',
-                        titel: 'E-Mail',
-                        placeholder: 'please give us a way to contact you',
-                    },
-                    {
-                        type: 'text',
-                        name: 'email',
-                        titel: 'E-Mail',
-                        placeholder: 'please give us a way to contact you',
-                    },
-                    {
-                        type: 'text',
-                        name: 'email',
-                        titel: 'E-Mail',
-                        placeholder: 'please give us a way to contact you',
-                    },
-                    {
-                        type: 'text',
-                        name: 'email',
-                        titel: 'E-Mail',
-                        placeholder: 'please give us a way to contact you',
-                    },
-                    {
-                        type: 'text',
-                        name: 'email',
-                        titel: 'E-Mail',
-                        placeholder: 'please give us a way to contact you',
-                    },
-                    {
                         type: 'select',
-                        name: 'dinosaurs',
-                        titel: 'xxx',
+                        name: 'animals',
+                        titel: 'Animals (select)',
                         placeholder: 'choose your favorites, yes more than one!',
                         items: [
                             {
-                                name: 'BrachiosaurusN',
-                                value: 'BrachiosaurusVx',
+                                name: 'African bush elephant',
+                                value: 'Africanbushelephant',
                             },
                             {
-                                name: 'Iguanodon',
-                                value: 'Iguanodonx',
+                                name: 'Elephant shrew',
+                                value: 'Elephant shrew',
                             },
                             {
-                                name: 'Dryosaurus',
-                                value: 'Dryosaurusx',
+                                name: 'Black rhinoceros',
+                                value: 'Blackrhinoceros',
                             },
                             {
-                                name: 'Tenontosaurus',
-                                value: 'Tenontosaurusx',
+                                name: 'Rhino beetle',
+                                value: 'Rhino beetle',
                             },
                             {
-                                name: 'Argentinosaurus',
-                                value: 'Argentinosaurusx',
+                                name: 'African buffalo',
+                                value: 'African buffalo',
                             },
                             {
-                                name: 'Brontosaurus',
-                                value: 'Brontosaurusx',
+                                name: 'Buffalo weaver',
+                                value: 'Buffalo weaver',
                             },
                             {
-                                name: 'Tyrannosaurus',
-                                value: 'Tyrannosaurusx',
+                                name: 'Lion',
+                                value: 'Lion',
+                            },
+                            {
+                                name: 'Antlion',
+                                value: 'Antlion',
+                            },
+                            {
+                                name: 'Leopard',
+                                value: 'Leopard',
+                            },
+                            {
+                                name: 'Leopard tortoise',
+                                value: 'Leopard tortoise',
                             },
                         ],
                     },
