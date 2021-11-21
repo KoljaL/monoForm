@@ -238,10 +238,6 @@
                 width: 100%;
             }
 
-            .checkboxGroup {
-                /* position: relative; */
-            }
-
             .CheckboxElement {
                 /* position: relative; */
             }
@@ -339,14 +335,14 @@
                     }
 
                     // checkboxGroup
-                    let divChk = document.createElement('div');
-                    divChk.setAttribute('class', 'checkboxGroup');
-                    if ('checkboxGroup' === d.type) {
-                        d.items.forEach((i) => {
-                            divChk.appendChild(createcheckboxGroup(i));
-                        });
-                        form.appendChild(divChk);
-                    }
+                    // let divChk = document.createElement('div');
+                    // divChk.setAttribute('class', 'checkboxGroup');
+                    // if ('checkboxGroup' === d.type) {
+                    //     d.items.forEach((i) => {
+                    //         divChk.appendChild(createcheckboxGroup(i));
+                    //     });
+                    //     form.appendChild(divChk);
+                    // }
 
                     // SELECT
                     if ('select' === d.type) {
@@ -361,6 +357,7 @@
                         divGroup.setAttribute('class', 'inputGroup');
 
                         d.items.forEach((i) => {
+                            i.GroupName = d.name;
                             if ('text' === i.type) {
                                 divGroup.appendChild(createInputText(i));
                             }
@@ -428,22 +425,22 @@
                 //
                 // CREATE CHECKBOXGROUP
                 //
-                function createcheckboxGroup(d) {
-                    // SOURROUNDING DIV
-                    let div = document.createElement('div');
-                    div.setAttribute('class', 'CheckboxElement');
-                    // INPUT FIELD
-                    let input = document.createElement('input');
-                    input.setAttribute('type', 'checkbox');
-                    input.setAttribute('name', d.name);
-                    // LABEL
-                    let label = document.createElement('label');
-                    label.textContent = d.name;
-                    // CONCAT EVERYTHING
-                    div.appendChild(input);
-                    div.appendChild(label);
-                    return div;
-                }
+                // function createcheckboxGroup(d) {
+                //     // SOURROUNDING DIV
+                //     let div = document.createElement('div');
+                //     div.setAttribute('class', 'CheckboxElement');
+                //     // INPUT FIELD
+                //     let input = document.createElement('input');
+                //     input.setAttribute('type', 'checkbox');
+                //     input.setAttribute('name', d.name);
+                //     // LABEL
+                //     let label = document.createElement('label');
+                //     label.textContent = d.name;
+                //     // CONCAT EVERYTHING
+                //     div.appendChild(input);
+                //     div.appendChild(label);
+                //     return div;
+                // }
 
                 //
                 // CREATE INPUT TEXT
@@ -472,6 +469,7 @@
                 // CREATE INPUT CHECKBOX
                 //
                 function createInputCheckbox(d) {
+                    deb(d);
                     // SOURROUNDING DIV
                     let div = document.createElement('div');
                     div.setAttribute('class', 'InputCheckbox');
@@ -481,7 +479,8 @@
                     // INPUT FIELD
                     let input = document.createElement('input');
                     input.setAttribute('type', d.type);
-                    input.setAttribute('name', d.titel);
+                    input.setAttribute('value', d.value);
+                    input.setAttribute('name', d.GroupName + '[]');
                     input.setAttribute('id', 'ckb' + d.titel);
                     //   input.setAttribute("style", "display:none;");
                     // LABEL
@@ -624,18 +623,25 @@
                 const allInputs = document.querySelectorAll("input[type='text'],input[type='select'], textarea");
                 allInputs.forEach(function (el) {
                     // deb(el)
+                    // if (null === el.parentNode.parentNode.previousSibling) {
+                    //     const labelListBox = el.previousSibling;
+                    // } else {
+                    //     const labelListBox = el.parentNode.parentNode.previousSibling;
+                    // }
                     const labelListBox = el.parentNode.parentNode.previousSibling;
                     const label = el.previousSibling;
                     el.addEventListener(
                         'change',
                         (evt) => {
                             if (0 < el.value.length) {
+                                if(null === labelListBox){
+                                    deb(el.previousSibling)
                                 // deb(el.parentNode.parentNode.previousSibling);
-                                // deb(el.previousSibling);
-                                labelListBox.setAttribute('class', 'isTop');
+                                }
+                                // labelListBox.setAttribute('class', 'isTop');
                                 label.setAttribute('class', 'isTop');
                             } else {
-                                labelListBox.removeAttribute('class', 'isTop');
+                                // labelListBox.removeAttribute('class', 'isTop');
                                 label.removeAttribute('class', 'isTop');
                             }
                         },
@@ -774,7 +780,7 @@
                 function showData() {
                     let FormName = data.FormMeta.name;
                     let FormElements = document.forms[FormName].elements;
-                    // deb(FormElements);
+                    deb(FormElements);
                     FormValues = {};
                     for (let element of FormElements) {
                         if (element.value && element.name) {
@@ -782,8 +788,17 @@
                             if ('ListBoxItem' === element.getAttribute('class')) {
                                 continue;
                             }
-                            // deb(element.getAttribute('class'));
-                            FormValues[element.name] = element.value;
+                            if ('checkbox' === element.type) {
+                                if (element.checked) {
+                                    deb(element);
+                                    if (!FormValues[element.name]) {
+                                        FormValues[element.name] = [];
+                                    }
+                                    FormValues[element.name].push(element.value);
+                                }
+                            } else {
+                                FormValues[element.name] = element.value;
+                            }
                         }
                     }
                     // deb(FormValues)
@@ -880,6 +895,7 @@
                     },
                     {
                         type: 'inputGroup',
+                        name: 'TOPs',
                         items: [
                             {
                                 type: 'checkbox',
@@ -903,23 +919,6 @@
                             },
                         ],
                     },
-                    //   {
-                    //     type: "checkboxGroup",
-                    //     items: [
-                    //       {
-                    //         name: "Master",
-                    //         value: "MA",
-                    //       },
-                    //       {
-                    //         name: "PhD",
-                    //         value: "PHD",
-                    //       },
-                    //       {
-                    //         name: "Professor",
-                    //         value: "PROF",
-                    //       },
-                    //     ],
-                    //   },
                     {
                         type: 'text',
                         name: 'email',
@@ -967,12 +966,6 @@
                                 value: 'Tyrannosaurus',
                             },
                         ],
-                    },
-                    {
-                        type: 'text',
-                        name: 'email',
-                        titel: 'E-Mail',
-                        placeholder: 'please give us a way to contact you',
                     },
                     {
                         type: 'select',
