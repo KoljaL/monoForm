@@ -10,33 +10,74 @@
             /* @font-face {
       font-family: 'virtuous-slab';
       src: url('css/fonts/PublicSans-Light.woff2') format('woff2');
+
+       border #444c56
+
+
       } */
             @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300&display=swap');
 
-            :root{
-                --FieldsetLegend: red;
-                --FieldsetBorder: red;
-                --FieldsetShadow: red;
-                --FieldsetBackground:lightgrey;
-                --LabelLarge: green;
-                --LabelTop:orange;
-                --LabelTopBackground: blue;
-                --InputText:red;
-                --InputBackground: gold;
-                --InputBorder:green;
-                --InputShadow: purple;
-                --InputShadowHover: yellow;
-                --InputShadowFocus: blue;
-                --ListBoxBackground: red;
-
-                
+            :root {
+                --BodyBackground: whitesmoke;
+                --FieldsetLegend: black;
+                --FieldsetBorder: black;
+                --FieldsetShadow: black;
+                --FieldsetBackground: whitesmoke;
+                --LabelLarge: black;
+                --LabelTop: dimgrey;
+                --LabelTopBackground: whitesmoke;
+                --LabelBorderActive: black;
+                --LabelShadowActive: dimgrey;
+                --InputText: black;
+                --InputBackground: whitesmoke;
+                --InputBorder: black;
+                --InputShadow: black;
+                --InputShadowHover: dimgrey;
+                --InputShadowFocus: dimgrey;
+                --ListBoxBackground: whitesmoke;
+                --ScrollbarBackground: whitesmoke;
+                --ScrollbaThumb: dimgrey;
+                --ScrollbarCorner: blue;
+                --ListBoxLiChecked: darkgrey;
+                --ListBoxLiHover: lightgrey;
+                --CheckboxCheckedBackground: whitesmoke;
+                --CheckboxCheckedShadow: dimgrey;
+                --CheckboxCheckedInside: black;
             }
+            [data-theme='dark'] {
+                --BodyBackground: #22272e;
+                --FieldsetLegend: #adbac7;
+                --FieldsetBorder: black;
+                --FieldsetShadow: black;
+                --FieldsetBackground: #1c2128;
+                --LabelLarge: #768390;
+                --LabelTop: #768390;
+                --LabelTopBackground: transparent;
+                --LabelBorderActive: #444c56;
+                --LabelShadowActive: black;
+                --InputText: #adbac7;
+                --InputBackground: #22272e;
+                --InputBorder: #444c56;
+                --InputBorder: black;
+                --InputShadow: black;
+                --InputShadowHover: black;
+                --InputShadowFocus: black;
+                --ListBoxBackground: #22272e;
+                --ScrollbarBackground: #22272e;
+                --ScrollbaThumb: #768390;
+                --ListBoxLiChecked: #1c2128;
+                --ListBoxLiHover: #1c2128;
+                --CheckboxCheckedBackground: #22272e;
+                --CheckboxCheckedShadow: black;
+                --CheckboxCheckedInside: black;
+            }
+
             * {
                 box-sizing: border-box;
             }
             body {
                 position: relative;
-                background: #eee;
+                background: var(--BodyBackground);
                 margin: 2rem auto;
                 max-width: max-content;
                 padding: 1em;
@@ -223,7 +264,7 @@
                 scrollbar-width: thin;
                 z-index: 5;
                 outline: #000 solid 1px;
-                box-shadow: 2px 2px 0 #555, -1px -1px 0px 0px #000;
+                box-shadow: 2px 2px 0 var(--LabelShadowActive), -1px -1px 0px 0px var(--LabelBorderActive);
                 -webkit-transition: 0.3s;
                 transition: 0.3s;
             }
@@ -231,21 +272,21 @@
             .floatLabel .ListBox.isActive ul::-webkit-scrollbar {
                 height: 0px;
                 width: 5px;
-                background: #fff;
+                background: var(--ScrollbarBackground);
             }
             .floatLabel .ListBox.isActive ul::-webkit-scrollbar-thumb {
-                background: #ccc;
+                background: var(--ScrollbaThumb);
                 /* -webkit-box-shadow: 0px 1px 2px #555; */
             }
             .floatLabel .ListBox.isActive ul::-webkit-scrollbar-corner {
-                background: #fff;
+                background: var(--ScrollbarCorner);
             }
             .floatLabel .ListBox li input:checked ~ label {
-                background: #ddd;
+                background: var(--ListBoxLiChecked);
             }
             .floatLabel .ListBox li input:checked ~ label:hover,
             .floatLabel .ListBox li label:hover {
-                background: #eee;
+                background: var(--ListBoxLiHover);
                 cursor: pointer;
             }
             .floatLabel .ListBox li label {
@@ -254,10 +295,7 @@
                 line-height: 1em;
                 font-size: 0.85em;
                 width: 100%;
-            }
-
-            .CheckboxElement {
-                /* position: relative; */
+                color: var(--LabelLarge);
             }
             .floatLabel .InputCheckbox label {
                 position: relative;
@@ -267,7 +305,7 @@
                 pointer-events: initial;
                 cursor: pointer;
                 font-size: 1em;
-                color: #555;
+                color: var(--LabelLarge);
                 -webkit-transition: 0.2s;
                 transition: 0.2s;
             }
@@ -294,9 +332,9 @@
                 width: 12px;
                 height: 12px;
                 border-radius: 0px;
-                border: 1px solid #000;
-                background-color: #fff;
-                box-shadow: 2px 2px 0 #555;
+                border: 1px solid var(--InputBorder);
+                background-color: var(--InputBackground);
+                box-shadow: 2px 2px 0 var(--InputShadow);
                 display: block;
                 content: '';
                 float: left;
@@ -304,21 +342,30 @@
                 z-index: 5;
                 position: relative;
             }
-            .floatLabel .InputCheckbox [type='checkbox'] + label:before:hover {
-                box-shadow: 2px 2px 0 red;
-            }
             .floatLabel .InputCheckbox [type='checkbox']:checked + label:before {
-                /* top:1; */
-                /* left:1; */
                 margin: 1px 4px 0 1px;
-                /* margin-top:1px; */
-                /* margin-left:1px; */
-                box-shadow: inset 0px 0px 0px 2px #fff, 1px 1px 0 #555;
-                background-color: #555;
+                box-shadow: inset 0px 0px 0px 2px var(--CheckboxCheckedBackground), 1px 1px 0 var(--CheckboxCheckedShadow);
+                background-color: var(--CheckboxCheckedInside);
             }
         </style>
     </head>
-    <body class="center">
+    <body class="center"> 
+            <label style="position:absolute; top:10px; right:20px;" for="darkmodecheckbox">
+                <input type="checkbox" id="darkmodecheckbox" style="display:none"/>
+                <em>Enable Dark Mode</em>
+            </label> 
+        <script>
+            const toggleSwitch = document.getElementById('darkmodecheckbox');
+            function switchTheme(e) {
+                if (e.target.checked) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                }
+            }
+
+            toggleSwitch.addEventListener('change', switchTheme, false);
+        </script>
         <div id="FORM"></div>
         <div id="FORMVALUES" style="opacity: 0"></div>
         <script id="CREATEFORM">
@@ -652,9 +699,9 @@
                         'change',
                         (evt) => {
                             if (0 < el.value.length) {
-                                if(null === labelListBox){
-                                    deb(el.previousSibling)
-                                // deb(el.parentNode.parentNode.previousSibling);
+                                if (null === labelListBox) {
+                                    deb(el.previousSibling);
+                                    // deb(el.parentNode.parentNode.previousSibling);
                                 }
                                 // labelListBox.setAttribute('class', 'isTop');
                                 label.setAttribute('class', 'isTop');
