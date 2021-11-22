@@ -71,7 +71,7 @@
                 --CheckboxCheckedShadow: black;
                 --CheckboxCheckedInside: black;
             }
-            * { 
+            * {
                 -webkit-transition: color 100ms linear;
                 -ms-transition: color 100ms linear;
                 transition: color 100ms linear;
@@ -117,10 +117,16 @@
                 padding: 1.5rem;
                 margin: 1em;
                 background: #fff;
-                width: 30rem;
+                min-width: 20rem;
+                max-width: 90vh;
                 background: var(--FieldsetBackground);
                 border: 1px solid var(--FieldsetBorder);
                 box-shadow: 4px 4px 0 var(--FieldsetShadow);
+            }
+
+
+            label {
+                white-space: nowrap;
             }
             .floatLabel legend {
                 position: relative;
@@ -129,9 +135,14 @@
                 font-family: 'Public Sans', sans-serif;
                 font-size: 1.5em;
             }
-            .inputGroup {
+            .floatLabel .inputGroup {
                 display: flex !important;
+                /* align-content: flex-start; */
+                flex-wrap: wrap;
                 margin-bottom: 0em !important;
+            }
+            .floatLabel .inputGroup > * {
+                max-width: max-content;
             }
             .inputGroup div {
                 margin-top: 0;
@@ -333,7 +344,7 @@
                 -webkit-appearance: none;
             }
             .floatLabel .InputCheckbox [type='checkbox'] + label {
-                position: absolute;
+                /* position: absolute; */
                 z-index: 5;
             }
             .floatLabel .InputCheckbox [type='checkbox'] + label:before {
@@ -360,7 +371,7 @@
     <body class="center">
         <label style="position: absolute; top: 10px; right: 20px" for="darkmodecheckbox">
             <input type="checkbox" id="darkmodecheckbox" style="display: none" />
-            <em id="darkmodelable" style="color: dimgrey; cursor:pointer;">Enable Dark Mode</em>
+            <em id="darkmodelable" style="color: dimgrey; cursor: pointer">Enable Dark Mode</em>
         </label>
         <script>
             const toggleSwitch = document.getElementById('darkmodecheckbox');
