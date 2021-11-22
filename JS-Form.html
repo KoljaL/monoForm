@@ -71,7 +71,15 @@
                 --CheckboxCheckedShadow: black;
                 --CheckboxCheckedInside: black;
             }
+            * { 
+                -webkit-transition: color 100ms linear;
+                -ms-transition: color 100ms linear;
+                transition: color 100ms linear;
 
+                -webkit-transition: background-color 100ms linear;
+                -ms-transition: background-color 100ms linear;
+                transition: background-color 100ms linear;
+            }
             * {
                 box-sizing: border-box;
             }
@@ -349,17 +357,21 @@
             }
         </style>
     </head>
-    <body class="center"> 
-            <label style="position:absolute; top:10px; right:20px;" for="darkmodecheckbox">
-                <input type="checkbox" id="darkmodecheckbox" style="display:none"/>
-                <em>Enable Dark Mode</em>
-            </label> 
+    <body class="center">
+        <label style="position: absolute; top: 10px; right: 20px" for="darkmodecheckbox">
+            <input type="checkbox" id="darkmodecheckbox" style="display: none" />
+            <em id="darkmodelable" style="color: dimgrey; cursor:pointer;">Enable Dark Mode</em>
+        </label>
         <script>
             const toggleSwitch = document.getElementById('darkmodecheckbox');
             function switchTheme(e) {
                 if (e.target.checked) {
                     document.documentElement.setAttribute('data-theme', 'dark');
+                    document.getElementById('darkmodelable').style.color = '#dimgrey';
+                    document.getElementById('darkmodelable').innerHTML = 'Enable Light Mode';
                 } else {
+                    document.getElementById('darkmodelable').innerHTML = 'Enable Dark Mode';
+                    document.getElementById('darkmodelable').style.color = '#768390';
                     document.documentElement.setAttribute('data-theme', 'light');
                 }
             }
