@@ -12,6 +12,25 @@
       src: url('css/fonts/PublicSans-Light.woff2') format('woff2');
       } */
             @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300&display=swap');
+
+            :root{
+                --FieldsetLegend: red;
+                --FieldsetBorder: red;
+                --FieldsetShadow: red;
+                --FieldsetBackground:lightgrey;
+                --LabelLarge: green;
+                --LabelTop:orange;
+                --LabelTopBackground: blue;
+                --InputText:red;
+                --InputBackground: gold;
+                --InputBorder:green;
+                --InputShadow: purple;
+                --InputShadowHover: yellow;
+                --InputShadowFocus: blue;
+                --ListBoxBackground: red;
+
+                
+            }
             * {
                 box-sizing: border-box;
             }
@@ -30,15 +49,13 @@
             }
             #FORMVALUES fieldset {
                 font-family: 'Public Sans', sans-serif;
-                /* opacity: 0; */
                 padding: 0em 1em;
                 margin: 20px;
                 max-width: max-content;
-                background: #fff;
-                border: 1px solid #000;
-                box-shadow: 4px 4px 0 #555;
+                background: var(--FieldsetBackground);
+                border: 1px solid var(--FieldsetBorder);
+                box-shadow: 4px 4px 0 var(--FieldsetShadow);
                 -webkit-transition: 1.4s;
-                /* transition: opacity 1.4s; */
                 transition: opacity 0.3s linear;
             }
             pre {
@@ -52,12 +69,14 @@
                 margin: 1em;
                 background: #fff;
                 width: 30rem;
-                border: 1px solid #000;
-                box-shadow: 4px 4px 0 #555;
+                background: var(--FieldsetBackground);
+                border: 1px solid var(--FieldsetBorder);
+                box-shadow: 4px 4px 0 var(--FieldsetShadow);
             }
             .floatLabel legend {
                 position: relative;
-                top: -0.25em;
+                /* top: -0.25em; */
+                color: var(--FieldsetLegend);
                 font-family: 'Public Sans', sans-serif;
                 font-size: 1.5em;
             }
@@ -93,18 +112,17 @@
                 pointer-events: none;
                 cursor: text;
                 font-size: 1em;
-                color: #555;
+                color: var(--LabelLarge);
                 -webkit-transition: 0.2s;
                 transition: 0.2s;
             }
-
             .floatLabel .isActive label,
             .floatLabel label.isTop {
                 top: -1em;
                 left: 0.5em;
                 padding: 0.1em 0.1em;
-                background: white;
-                color: #555;
+                background: var(--LabelTopBackground);
+                color: var(--LabelTop);
                 font-size: 0.8em;
                 z-index: 2;
                 -webkit-transition: 0.2s;
@@ -133,11 +151,11 @@
                 /* padding: 0.4em 0.5em 0.1em 0.5em; */
                 padding: 0.35em 0.5em 0.2em 0.5em;
                 border: 0;
-                color: #000;
-                background: #fff;
+                color: var(--InputText);
+                background: var(--InputBackground);
                 width: 100%;
-                outline: #000 solid 1px;
-                box-shadow: 4px 4px 0 #555;
+                outline: var(--InputBorder) solid 1px;
+                box-shadow: 4px 4px 0 var(--InputShadow);
                 -webkit-transition: 0.1s;
                 transition: 0.1s;
             }
@@ -165,7 +183,7 @@
             .floatLabel input[type='select']:hover,
             .floatLabel textarea:hover,
             .floatLabelButton:hover {
-                box-shadow: 4px 4px 0 #777;
+                box-shadow: 4px 4px 0 var(--InputShadowHover);
                 -webkit-transition: 0.1s;
                 transition: 0.1s;
             }
@@ -174,7 +192,7 @@
             .floatLabel .isActive input,
             .floatLabel textarea:focus,
             .floatLabelButton.submitButtonActive {
-                box-shadow: 2px 2px 0 #777 !important;
+                box-shadow: 2px 2px 0 var(--InputShadowFocus) !important;
                 transform: translate(2px, 2px);
                 -webkit-transition: 0.1s;
                 transition: 0.1s;
@@ -183,7 +201,7 @@
                 position: absolute;
                 max-height: 0px;
                 overflow: hidden;
-                background: #fff;
+                background: var(--ListBoxBackground);
                 width: 100%;
                 list-style: none;
                 padding: 0;
